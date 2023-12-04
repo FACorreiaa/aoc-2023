@@ -1,11 +1,11 @@
-package day_one
+package dayone
 
 import (
-	"bufio"
 	"fmt"
-	"os"
+	"github.com/FACorreiaa/aoc-2023/common"
 	"strconv"
 	"strings"
+	"time"
 	"unicode"
 )
 
@@ -13,14 +13,14 @@ var (
 	lookup = []string{"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"}
 )
 
-func PartOne() {
-	lines := getLines(os.Args[1])
+func partOne() {
+	lines := common.GetLines()
 	numbers := extractNumbers(lines)
 	fmt.Println(sum(numbers))
 }
 
-func PartTwo() {
-	lines := getLines(os.Args[1])
+func partTwo() {
+	lines := common.GetLines()
 	lines = replaceAlphaNumbers(lines)
 	numbers := extractNumbers(lines)
 	fmt.Println(sum(numbers))
@@ -77,23 +77,11 @@ func extractNumber(line string) int {
 	return num
 }
 
-func getLines(filename string) []string {
-	file, err := os.Open(filename)
-	if err != nil {
-		panic(err)
-	}
-
-	defer file.Close()
-
-	var lines []string
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
-	}
-
-	if scanner.Err() != nil {
-		panic(err)
-	}
-
-	return lines
+func StartDayOne() {
+	partOneStart := time.Now()
+	partOne()
+	fmt.Println("Day one part one took: ", time.Since(partOneStart))
+	partTwoStart := time.Now()
+	partTwo()
+	fmt.Println("Day one part two took: ", time.Since(partTwoStart))
 }
