@@ -1,11 +1,11 @@
 package main
 
 import (
-	dayone "github.com/FACorreiaa/aoc-2023/day-one"
-	daytwo "github.com/FACorreiaa/aoc-2023/day-two"
+	daythree "github.com/FACorreiaa/aoc-2023/day-three"
 )
 
 func main() {
-	dayone.StartDayOne()
-	daytwo.StartDayTwo()
+	//dayone.StartDayOne()
+	//daytwo.StartDayTwo()
+	daythree.StartDayThree()
 }

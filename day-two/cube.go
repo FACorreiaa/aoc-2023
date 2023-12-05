@@ -106,7 +106,7 @@ func (g Game) Power() int {
 
 func StartDayTwo() {
 	partOneStart := time.Now()
-	lines := common.GetLines()
+	lines := common.GetLines("./day-two/cube.txt")
 	games := parseGames(lines)
 	partOne(games)
 	fmt.Println("Day two part one took: ", time.Since(partOneStart))

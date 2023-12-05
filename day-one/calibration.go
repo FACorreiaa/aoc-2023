@@ -14,25 +14,16 @@ var (
 )
 
 func partOne() {
-	lines := common.GetLines()
+	lines := common.GetLines("./day-one/calibration.txt")
 	numbers := extractNumbers(lines)
-	fmt.Println(sum(numbers))
+	fmt.Println(common.Sum(numbers))
 }
 
 func partTwo() {
-	lines := common.GetLines()
+	lines := common.GetLines("./day-one/calibration.txt")
 	lines = replaceAlphaNumbers(lines)
 	numbers := extractNumbers(lines)
-	fmt.Println(sum(numbers))
-}
-
-func sum(nums []int) int {
-	var result int
-	for _, i := range nums {
-		result += i
-	}
-
-	return result
+	fmt.Println(common.Sum(numbers))
 }
 
 func replaceAlphaNumbers(lines []string) []string {
@@ -71,7 +62,7 @@ func extractNumber(line string) int {
 
 	num, err := strconv.Atoi(string([]rune{digits[0], digits[len(digits)-1]}))
 	if err != nil {
-		panic(err)
+		common.HandleError(err, "Error getting number")
 	}
 
 	return num

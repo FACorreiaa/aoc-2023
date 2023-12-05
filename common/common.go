@@ -7,8 +7,10 @@ import (
 	"strings"
 )
 
-func GetLines() []string {
-	file, err := os.Open(os.Args[1])
+func GetLines(filePath string) []string {
+	//file, err := os.Open(os.Args[1])
+	file, err := os.Open(filePath)
+
 	if err != nil {
 		panic(err)
 	}
@@ -37,4 +39,14 @@ func HandleError(err error, message string) {
 	if err != nil {
 		log.Printf("%s: %v", message, err)
 	}
+	panic(err)
+}
+
+func Sum(nums []int) int {
+	var result int
+	for _, i := range nums {
+		result += i
+	}
+
+	return result
 }
