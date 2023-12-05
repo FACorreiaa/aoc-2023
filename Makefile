@@ -1,9 +1,9 @@
 # run days
-dayone:
-	go run main.go day-one/calibration.txt
+run:
+	go run main.go
 
-daytwo:
-	go run main.go day-two/cube.txt
+test:
+	go test ./cmd/...
 
-daythree:
-	go run main.go day-two/gear.txt
+bench:
+	go test -bench=. ./...

@@ -2,7 +2,7 @@ package daytwo
 
 import (
 	"fmt"
-	"github.com/FACorreiaa/aoc-2023/common"
+	"github.com/FACorreiaa/aoc-2023/cmd/common"
 	"strings"
 	"time"
 )
@@ -36,7 +36,7 @@ func (g Game) IsPossible(red, green, blue int) bool {
 	return true
 }
 
-func partOne(games []Game) {
+func partOne(games []Game) int {
 	var total int
 
 	for _, game := range games {
@@ -45,6 +45,7 @@ func partOne(games []Game) {
 		}
 	}
 	fmt.Println("Day two part one: ", total)
+	return total
 }
 
 func parseGames(lines []string) []Game {
@@ -90,13 +91,14 @@ func parseSet(input string) Set {
 	return set
 }
 
-func partTwo(games []Game) {
+func partTwo(games []Game) int {
 	var total int
 	for _, game := range games {
 		total += game.Power()
 	}
 
-	fmt.Println(total)
+	fmt.Println("Day two part one: ", total)
+	return total
 }
 
 func (g Game) Power() int {
@@ -105,12 +107,19 @@ func (g Game) Power() int {
 }
 
 func StartDayTwo() {
-	partOneStart := time.Now()
-	lines := common.GetLines("./day-two/cube.txt")
+
+	lines := common.GetLines("./cmd/day-two/cube.txt")
+	for _, line := range lines {
+		fmt.Println(line)
+	}
 	games := parseGames(lines)
+	partOneStart := time.Now()
 	partOne(games)
-	fmt.Println("Day two part one took: ", time.Since(partOneStart))
+	fmt.Println("\nDay two part one took: ", time.Since(partOneStart))
+	fmt.Println("Result: ", partOne(games))
+
 	partTwoStart := time.Now()
 	partTwo(games)
-	fmt.Println("Day two part two took: ", time.Since(partTwoStart))
+	fmt.Println("\nDay two part two took: ", time.Since(partTwoStart))
+	fmt.Println("Result: ", partTwo(games))
 }

@@ -2,7 +2,7 @@ package daythree
 
 import (
 	"fmt"
-	"github.com/FACorreiaa/aoc-2023/common"
+	"github.com/FACorreiaa/aoc-2023/cmd/common"
 	"strconv"
 	"strings"
 	"time"
@@ -54,7 +54,6 @@ func partOne(s string) int {
 			numEnd = -1
 		}
 	}
-	println("Part one score:", score)
 	return score
 }
 
@@ -187,7 +186,6 @@ func partTwo(s string) int {
 		}
 		score += value[0] * value[1]
 	}
-	println("Part two score:", score)
 	return score
 }
 
@@ -201,12 +199,18 @@ func extractPartTwoNumbers(lines []string) []int {
 }
 
 func StartDayThree() {
-	lines := common.GetLines("./day-three/gear.txt")
+	lines := common.GetLines("./cmd/day-three/gear.txt")
+	for _, line := range lines {
+		fmt.Println(line)
+	}
 	extractPartOneNumbers(lines)
 	partOneStart := time.Now()
-	fmt.Println("Day three part one took: ", time.Since(partOneStart))
+	fmt.Println("\nDay three part one took: ", time.Since(partOneStart))
+	fmt.Println("Result: ", extractPartOneNumbers(lines))
+
 	partTwoStart := time.Now()
 	extractPartTwoNumbers(lines)
-	fmt.Println("Day three part two took: ", time.Since(partTwoStart))
+	fmt.Println("\nDay three part two took: ", time.Since(partTwoStart))
+	fmt.Println("Result: ", extractPartTwoNumbers(lines))
 
 }

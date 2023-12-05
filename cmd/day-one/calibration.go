@@ -2,7 +2,7 @@ package dayone
 
 import (
 	"fmt"
-	"github.com/FACorreiaa/aoc-2023/common"
+	"github.com/FACorreiaa/aoc-2023/cmd/common"
 	"strconv"
 	"strings"
 	"time"
@@ -13,17 +13,15 @@ var (
 	lookup = []string{"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"}
 )
 
-func partOne() {
-	lines := common.GetLines("./day-one/calibration.txt")
+func partOne(lines []string) int {
 	numbers := extractNumbers(lines)
-	fmt.Println(common.Sum(numbers))
+	return common.Sum(numbers)
 }
 
-func partTwo() {
-	lines := common.GetLines("./day-one/calibration.txt")
+func partTwo(lines []string) int {
 	lines = replaceAlphaNumbers(lines)
 	numbers := extractNumbers(lines)
-	fmt.Println(common.Sum(numbers))
+	return common.Sum(numbers)
 }
 
 func replaceAlphaNumbers(lines []string) []string {
@@ -69,10 +67,16 @@ func extractNumber(line string) int {
 }
 
 func StartDayOne() {
+	lines := common.GetLines("./cmd/day-one/calibration.txt")
+	for _, line := range lines {
+		fmt.Println(line)
+	}
 	partOneStart := time.Now()
-	partOne()
-	fmt.Println("Day one part one took: ", time.Since(partOneStart))
+	fmt.Println("\nDay one part one took: ", time.Since(partOneStart))
+	fmt.Println("Result: ", partOne(lines))
 	partTwoStart := time.Now()
-	partTwo()
-	fmt.Println("Day one part two took: ", time.Since(partTwoStart))
+	partTwo(lines)
+	fmt.Println("\nDay one part two took: ", time.Since(partTwoStart))
+	fmt.Println("Result: ", partTwo(lines))
+
 }
