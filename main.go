@@ -2,8 +2,7 @@ package main
 
 import (
 	"fmt"
-	dayone "github.com/FACorreiaa/aoc-2023/cmd/day-one"
-	daythree "github.com/FACorreiaa/aoc-2023/cmd/day-three"
+	dayfour "github.com/FACorreiaa/aoc-2023/cmd/day-four"
 	daytwo "github.com/FACorreiaa/aoc-2023/cmd/day-two"
 	"math/rand"
 	"os"
@@ -35,12 +34,14 @@ func (r *randomItemGenerator) reset() {
 		"Day 1",
 		"Day 2",
 		"Day 3",
+		"Day 4",
 	}
 
 	r.description = []string{
 		"Trebuchet",
 		"Cube Conundrum",
 		"Gear Ratios",
+		"Scratchcards",
 	}
 
 	//r.shuffle.Do(func() {
@@ -68,9 +69,10 @@ func newItemDelegate(keys *delegateKeyMap) list.DefaultDelegate {
 
 		//
 		mapFunction := map[string]func(){
-			"Day 1": dayone.StartDayOne,
+			//"Day 1": dayone.StartDayOne,
 			"Day 2": daytwo.StartDayTwo,
-			"Day 3": daythree.StartDayThree,
+			//"Day 3": daythree.StartDayThree,
+			"Day 4": dayfour.StartDayFour,
 		}
 		switch msg := msg.(type) {
 		case tea.KeyMsg:
@@ -252,7 +254,7 @@ func newModel() model {
 	)
 
 	// Make initial list of items
-	const numItems = 3
+	const numItems = 25
 	items := make([]list.Item, numItems)
 	for i := 0; i < numItems; i++ {
 		items[i] = itemGenerator.next()

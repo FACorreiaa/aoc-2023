@@ -6,6 +6,8 @@ import (
 	"strings"
 )
 
+// test os.Readfile
+
 //func GetLines(filePath string) []string {
 //	//file, err := os.Open(os.Args[1])
 //	file, err := os.Open(filePath)
@@ -36,11 +38,13 @@ func GetLines(filePath string) []string {
 	}
 
 	lines := strings.Split(string(content), "\n")
+
 	return lines
 }
 
 func Split(input, sep string) (left, right string) {
-	split := strings.SplitN(input, sep, 2)
+	split := strings.Split(input, sep)
+
 	return split[0], split[1]
 }
 
