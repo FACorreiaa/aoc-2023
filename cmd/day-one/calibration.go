@@ -72,11 +72,12 @@ func StartDayOne() {
 		fmt.Println(line)
 	}
 	partOneStart := time.Now()
+	partOneResult := partOne(lines)
+	fmt.Println("Result: ", partOneResult)
 	fmt.Println("\nDay one part one took: ", time.Since(partOneStart))
-	fmt.Println("Result: ", partOne(lines))
 	partTwoStart := time.Now()
-	partTwo(lines)
+	partTwoResult := partTwo(lines)
+	fmt.Println("Result: ", partTwoResult)
 	fmt.Println("\nDay one part two took: ", time.Since(partTwoStart))
-	fmt.Println("Result: ", partTwo(lines))
 
 }

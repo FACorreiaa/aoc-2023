@@ -120,15 +120,6 @@ func isSymbol(b byte) bool {
 	return true
 }
 
-func extractPartOneNumbers(lines []string) []int {
-	var numbers []int
-	for _, _ = range lines {
-		numbers = append(numbers, partOne(strings.Join(lines, "\n")))
-	}
-
-	return numbers
-}
-
 func isAsterisk(b byte) bool {
 	return b == '*'
 }
@@ -189,28 +180,19 @@ func partTwo(s string) int {
 	return score
 }
 
-func extractPartTwoNumbers(lines []string) []int {
-	var numbers []int
-	for _, _ = range lines {
-		numbers = append(numbers, partTwo(strings.Join(lines, "\n")))
-	}
-
-	return numbers
-}
-
 func StartDayThree() {
 	lines := common.GetLines("./cmd/day-three/gear.txt")
 	for _, line := range lines {
 		fmt.Println(line)
 	}
-	extractPartOneNumbers(lines)
 	partOneStart := time.Now()
+	partOneResult := partOne(strings.Join(lines, "\n"))
+	fmt.Println("Result: ", partOneResult)
 	fmt.Println("\nDay three part one took: ", time.Since(partOneStart))
-	fmt.Println("Result: ", extractPartOneNumbers(lines))
 
 	partTwoStart := time.Now()
-	extractPartTwoNumbers(lines)
+	partTwoResult := partTwo(strings.Join(lines, "\n"))
+	fmt.Println("Result: ", partTwoResult)
 	fmt.Println("\nDay three part two took: ", time.Since(partTwoStart))
-	fmt.Println("Result: ", extractPartTwoNumbers(lines))
 
 }

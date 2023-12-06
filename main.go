@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	dayfour "github.com/FACorreiaa/aoc-2023/cmd/day-four"
+	dayone "github.com/FACorreiaa/aoc-2023/cmd/day-one"
+	daythree "github.com/FACorreiaa/aoc-2023/cmd/day-three"
 	daytwo "github.com/FACorreiaa/aoc-2023/cmd/day-two"
 	"math/rand"
 	"os"
@@ -69,9 +71,9 @@ func newItemDelegate(keys *delegateKeyMap) list.DefaultDelegate {
 
 		//
 		mapFunction := map[string]func(){
-			//"Day 1": dayone.StartDayOne,
+			"Day 1": dayone.StartDayOne,
 			"Day 2": daytwo.StartDayTwo,
-			//"Day 3": daythree.StartDayThree,
+			"Day 3": daythree.StartDayThree,
 			"Day 4": dayfour.StartDayFour,
 		}
 		switch msg := msg.(type) {

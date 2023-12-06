@@ -136,37 +136,19 @@ func calculateScorePartTwo(s string) (int, int) {
 	return id, score
 }
 
-func extractPartOneNumbers(lines []string) []int {
-	var numbers []int
-	for _, _ = range lines {
-		numbers = append(numbers, partOne(strings.Join(lines, "\n")))
-	}
-
-	return numbers
-}
-
-func extractPartTwoNumbers(lines []string) []int {
-	var numbers []int
-	for _, _ = range lines {
-		numbers = append(numbers, partTwo(strings.Join(lines, "\n")))
-	}
-
-	return numbers
-}
-
 func StartDayFour() {
 	lines := common.GetLines("./cmd/day-four/scratchcards.txt")
 	for _, line := range lines {
 		fmt.Println(line)
 	}
 	partOneStart := time.Now()
-	extractPartOneNumbers(lines)
+	partOneResult := partOne(strings.Join(lines, "\n"))
+	fmt.Println("Result: ", partOneResult)
 	fmt.Println("\nDay four part one took: ", time.Since(partOneStart))
-	fmt.Println("Result: ", extractPartOneNumbers(lines))
 
 	partTwoStart := time.Now()
+	partTwoResult := partTwo(strings.Join(lines, "\n"))
+	fmt.Println("Result: ", partTwoResult)
 	fmt.Println("\nDay four part two took: ", time.Since(partTwoStart))
-	extractPartTwoNumbers(lines)
-	fmt.Println("Result: ", extractPartTwoNumbers(lines))
 
 }

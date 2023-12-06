@@ -1,6 +1,7 @@
 package common
 
 import (
+	"bufio"
 	"log"
 	"os"
 	"strings"
@@ -8,39 +9,39 @@ import (
 
 // test os.Readfile
 
-//func GetLines(filePath string) []string {
-//	//file, err := os.Open(os.Args[1])
-//	file, err := os.Open(filePath)
-//
-//	if err != nil {
-//		panic(err)
-//	}
-//
-//	defer file.Close()
-//
-//	var lines []string
-//	scanner := bufio.NewScanner(file)
-//	for scanner.Scan() {
-//		lines = append(lines, scanner.Text())
-//	}
-//
-//	if scanner.Err() != nil {
-//		panic(err)
-//	}
-//
-//	return lines
-//}
-
 func GetLines(filePath string) []string {
-	content, err := os.ReadFile(filePath)
+	//file, err := os.Open(os.Args[1])
+	file, err := os.Open(filePath)
+
 	if err != nil {
-		HandleError(err, "Error reading file")
+		panic(err)
 	}
 
-	lines := strings.Split(string(content), "\n")
+	defer file.Close()
+
+	var lines []string
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+
+	if scanner.Err() != nil {
+		panic(err)
+	}
 
 	return lines
 }
+
+//func GetLines(filePath string) []string {
+//	content, err := os.ReadFile(filePath)
+//	if err != nil {
+//		HandleError(err, "Error reading file")
+//	}
+//
+//	lines := strings.Split(string(content), "\n")
+//
+//	return lines
+//}
 
 func Split(input, sep string) (left, right string) {
 	split := strings.Split(input, sep)

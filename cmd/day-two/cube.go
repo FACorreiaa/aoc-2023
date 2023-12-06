@@ -114,12 +114,12 @@ func StartDayTwo() {
 	}
 	games := parseGames(lines)
 	partOneStart := time.Now()
-	partOne(games)
+	partOneResult := partOne(games)
+	fmt.Println("Result: ", partOneResult)
 	fmt.Println("\nDay two part one took: ", time.Since(partOneStart))
-	fmt.Println("Result: ", partOne(games))
 
 	partTwoStart := time.Now()
-	partTwo(games)
+	partTwoResult := partTwo(games)
+	fmt.Println("Result: ", partTwoResult)
 	fmt.Println("\nDay two part two took: ", time.Since(partTwoStart))
-	fmt.Println("Result: ", partTwo(games))
 }
