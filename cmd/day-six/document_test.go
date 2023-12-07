@@ -1,4 +1,4 @@
-package dayfive
+package daysix
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -8,18 +8,18 @@ import (
 
 func TestPartOne(t *testing.T) {
 	tests := []struct {
-		expected int64
+		expected int
 		input    string
-		fn       func(string) int64
+		fn       func(string) int
 	}{
 
 		{
-			35,
+			288,
 			`document_test_one.txt`,
 			partOne,
 		},
 		{
-			46,
+			71516,
 			`document_test_two.txt`,
 			partTwo,
 		},

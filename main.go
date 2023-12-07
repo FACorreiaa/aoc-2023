@@ -4,6 +4,7 @@ import (
 	dayfive "github.com/FACorreiaa/aoc-2023/cmd/day-five"
 	dayfour "github.com/FACorreiaa/aoc-2023/cmd/day-four"
 	dayone "github.com/FACorreiaa/aoc-2023/cmd/day-one"
+	daysix "github.com/FACorreiaa/aoc-2023/cmd/day-six"
 	daythree "github.com/FACorreiaa/aoc-2023/cmd/day-three"
 	daytwo "github.com/FACorreiaa/aoc-2023/cmd/day-two"
 	"github.com/charmbracelet/bubbles/key"
@@ -34,6 +35,7 @@ func (r *randomItemGenerator) reset() {
 		"Day 3",
 		"Day 4",
 		"Day 5",
+		"Day 6",
 	}
 
 	r.description = []string{
@@ -42,6 +44,7 @@ func (r *randomItemGenerator) reset() {
 		"Gear Ratios",
 		"Scratchcards",
 		"If You Give A Seed A Fertilizer",
+		"Wait for it",
 	}
 
 	//r.shuffle.Do(func() {
@@ -355,5 +358,5 @@ func main() {
 	//	log.Print("Error running program:", err)
 	//	os.Exit(1)
 	//}
-	dayfive.Start()
+	daysix.Start()
 }
