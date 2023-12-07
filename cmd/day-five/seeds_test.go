@@ -8,9 +8,9 @@ import (
 
 func TestPartOne(t *testing.T) {
 	tests := []struct {
-		expected int
+		expected int64
 		input    string
-		fn       func(string) int
+		fn       func(string) int64
 	}{
 
 		{
