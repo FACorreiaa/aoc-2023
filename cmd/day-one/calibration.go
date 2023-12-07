@@ -3,6 +3,7 @@ package dayone
 import (
 	"fmt"
 	"github.com/FACorreiaa/aoc-2023/cmd/common"
+	"log"
 	"strconv"
 	"strings"
 	"time"
@@ -66,18 +67,18 @@ func extractNumber(line string) int {
 	return num
 }
 
-func StartDayOne() {
+func Start() {
 	lines := common.GetLines("./cmd/day-one/calibration.txt")
 	for _, line := range lines {
-		fmt.Println(line)
+		log.Print(line)
 	}
 	partOneStart := time.Now()
 	partOneResult := partOne(lines)
-	fmt.Println("Result: ", partOneResult)
-	fmt.Println("\nDay one part one took: ", time.Since(partOneStart))
+	log.Print("Result: ", partOneResult)
+	log.Print("\nDay one part one took: ", time.Since(partOneStart))
 	partTwoStart := time.Now()
 	partTwoResult := partTwo(lines)
-	fmt.Println("Result: ", partTwoResult)
-	fmt.Println("\nDay one part two took: ", time.Since(partTwoStart))
+	log.Print("Result: ", partTwoResult)
+	log.Print("\nDay one part two took: ", time.Since(partTwoStart))
 
 }

@@ -1,8 +1,8 @@
 package dayfour
 
 import (
-	"fmt"
 	"github.com/FACorreiaa/aoc-2023/cmd/common"
+	"log"
 	"regexp"
 	"strconv"
 	"strings"
@@ -136,19 +136,18 @@ func calculateScorePartTwo(s string) (int, int) {
 	return id, score
 }
 
-func StartDayFour() {
+func Start() {
 	lines := common.GetLines("./cmd/day-four/scratchcards.txt")
 	for _, line := range lines {
-		fmt.Println(line)
+		log.Print(line)
 	}
 	partOneStart := time.Now()
 	partOneResult := partOne(strings.Join(lines, "\n"))
-	fmt.Println("Result: ", partOneResult)
-	fmt.Println("\nDay four part one took: ", time.Since(partOneStart))
-
+	log.Print("Result: ", partOneResult)
+	log.Print("\nDay four part one took: ", time.Since(partOneStart))
 	partTwoStart := time.Now()
 	partTwoResult := partTwo(strings.Join(lines, "\n"))
-	fmt.Println("Result: ", partTwoResult)
-	fmt.Println("\nDay four part two took: ", time.Since(partTwoStart))
+	log.Print("Result: ", partTwoResult)
+	log.Print("\nDay four part two took: ", time.Since(partTwoStart))
 
 }

@@ -3,6 +3,7 @@ package daytwo
 import (
 	"fmt"
 	"github.com/FACorreiaa/aoc-2023/cmd/common"
+	"log"
 	"strings"
 	"time"
 )
@@ -44,7 +45,7 @@ func partOne(games []Game) int {
 			total += game.ID
 		}
 	}
-	fmt.Println("Day two part one: ", total)
+	log.Print("Day two part one: ", total)
 	return total
 }
 
@@ -97,7 +98,7 @@ func partTwo(games []Game) int {
 		total += game.Power()
 	}
 
-	fmt.Println("Day two part one: ", total)
+	log.Print("Day two part one: ", total)
 	return total
 }
 
@@ -106,20 +107,19 @@ func (g Game) Power() int {
 	return maxValue["red"] * maxValue["blue"] * maxValue["green"]
 }
 
-func StartDayTwo() {
+func Start() {
 
 	lines := common.GetLines("./cmd/day-two/cube.txt")
 	for _, line := range lines {
-		fmt.Println(line)
+		log.Print(line)
 	}
 	games := parseGames(lines)
 	partOneStart := time.Now()
 	partOneResult := partOne(games)
-	fmt.Println("Result: ", partOneResult)
-	fmt.Println("\nDay two part one took: ", time.Since(partOneStart))
-
+	log.Print("Result: ", partOneResult)
+	log.Print("\nDay two part one took: ", time.Since(partOneStart))
 	partTwoStart := time.Now()
 	partTwoResult := partTwo(games)
-	fmt.Println("Result: ", partTwoResult)
-	fmt.Println("\nDay two part two took: ", time.Since(partTwoStart))
+	log.Print("Result: ", partTwoResult)
+	log.Print("\nDay two part two took: ", time.Since(partTwoStart))
 }

@@ -1,20 +1,16 @@
 package main
 
 import (
-	"fmt"
+	dayfive "github.com/FACorreiaa/aoc-2023/cmd/day-five"
 	dayfour "github.com/FACorreiaa/aoc-2023/cmd/day-four"
 	dayone "github.com/FACorreiaa/aoc-2023/cmd/day-one"
 	daythree "github.com/FACorreiaa/aoc-2023/cmd/day-three"
 	daytwo "github.com/FACorreiaa/aoc-2023/cmd/day-two"
-	"math/rand"
-	"os"
-	"sync"
-	"time"
-
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"sync"
 )
 
 //items
@@ -37,13 +33,15 @@ func (r *randomItemGenerator) reset() {
 		"Day 2",
 		"Day 3",
 		"Day 4",
+		"Day 5",
 	}
 
 	r.description = []string{
-		"Trebuchet",
+		"Trebuchet?!",
 		"Cube Conundrum",
 		"Gear Ratios",
 		"Scratchcards",
+		"If You Give A Seed A Fertilizer",
 	}
 
 	//r.shuffle.Do(func() {
@@ -71,10 +69,11 @@ func newItemDelegate(keys *delegateKeyMap) list.DefaultDelegate {
 
 		//
 		mapFunction := map[string]func(){
-			"Day 1": dayone.StartDayOne,
-			"Day 2": daytwo.StartDayTwo,
-			"Day 3": daythree.StartDayThree,
-			"Day 4": dayfour.StartDayFour,
+			"Day 1": dayone.Start,
+			"Day 2": daytwo.Start,
+			"Day 3": daythree.Start,
+			"Day 4": dayfour.Start,
+			"Day 5": dayfive.Start,
 		}
 		switch msg := msg.(type) {
 		case tea.KeyMsg:
@@ -262,7 +261,6 @@ func newModel() model {
 		items[i] = itemGenerator.next()
 	}
 
-	daytwo.StartDayTwo()
 	// Setup list
 	delegate := newItemDelegate(delegateKeys)
 	menuList := list.New(items, delegate, 0, 0)
@@ -351,10 +349,11 @@ func (m model) View() string {
 }
 
 func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
-
-	if _, err := tea.NewProgram(newModel()).Run(); err != nil {
-		fmt.Println("Error running program:", err)
-		os.Exit(1)
-	}
+	//rand.Seed(time.Now().UTC().UnixNano())
+	//
+	//if _, err := tea.NewProgram(newModel()).Run(); err != nil {
+	//	log.Print("Error running program:", err)
+	//	os.Exit(1)
+	//}
+	dayfive.Start()
 }

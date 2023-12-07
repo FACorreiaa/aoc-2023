@@ -3,6 +3,7 @@ package daythree
 import (
 	"fmt"
 	"github.com/FACorreiaa/aoc-2023/cmd/common"
+	"log"
 	"strconv"
 	"strings"
 	"time"
@@ -180,19 +181,18 @@ func partTwo(s string) int {
 	return score
 }
 
-func StartDayThree() {
+func Start() {
 	lines := common.GetLines("./cmd/day-three/gear.txt")
 	for _, line := range lines {
-		fmt.Println(line)
+		log.Print(line)
 	}
 	partOneStart := time.Now()
 	partOneResult := partOne(strings.Join(lines, "\n"))
-	fmt.Println("Result: ", partOneResult)
-	fmt.Println("\nDay three part one took: ", time.Since(partOneStart))
-
+	log.Print("Result: ", partOneResult)
+	log.Print("\nDay three part one took: ", time.Since(partOneStart))
 	partTwoStart := time.Now()
 	partTwoResult := partTwo(strings.Join(lines, "\n"))
-	fmt.Println("Result: ", partTwoResult)
-	fmt.Println("\nDay three part two took: ", time.Since(partTwoStart))
+	log.Print("Result: ", partTwoResult)
+	log.Print("\nDay three part two took: ", time.Since(partTwoStart))
 
 }
