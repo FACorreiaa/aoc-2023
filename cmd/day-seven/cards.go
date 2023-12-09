@@ -87,6 +87,7 @@ func partOne(s string, jokerIsWild bool) int64 {
 	}
 
 	for _, line := range strings.Split(s, "\n") {
+
 		split := strings.Split(line, ` `)
 		bid, err := strconv.Atoi(split[1])
 
@@ -112,8 +113,9 @@ func partOne(s string, jokerIsWild bool) int64 {
 
 				return strength[hands[i].cards[k]] < strength[hands[j].cards[k]]
 			}
-			
+
 		}
+
 		return hands[i].bestHand < hands[j].bestHand
 	})
 
@@ -179,7 +181,7 @@ func playWilds(h hand) int {
 }
 
 func Start() {
-	lines := common.GetLines("./cmd/day-seven/cards.txt")
+	lines := common.GetLines("./cmd/day-seven/cards_test_one.txt")
 	for _, line := range lines {
 		println(line)
 	}
@@ -187,9 +189,8 @@ func Start() {
 	partOneResult := partOne(strings.Join(lines, "\n"), false)
 	log.Print("Result: ", partOneResult)
 	log.Print("Day seven part one took: ", time.Since(partOneStart))
-	partTwoStart := time.Now()
-	partTwoResult := partOne(strings.Join(lines, "\n"), true)
-	log.Print("Result: ", partTwoResult)
-	log.Print("Day seven part two took: ", time.Since(partTwoStart))
-
+	//partTwoStart := time.Now()
+	//partTwoResult := partOne(strings.Join(lines, "\n"), true)
+	//log.Print("Result: ", partTwoResult)
+	//log.Print("Day seven part two took: ", time.Since(partTwoStart))
 }

@@ -28,8 +28,6 @@ func partOne(s string) int {
 		}
 		score = score * count
 	}
-	fmt.Printf("%#v", distances)
-	fmt.Printf("%#v\n", times)
 
 	return score
 }

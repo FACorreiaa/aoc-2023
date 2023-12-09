@@ -16,13 +16,13 @@ func TestPartOne(t *testing.T) {
 
 		{
 			6440,
-			`cards_test_one.txt`,
+			`mirage_test_one.txt`,
 			false,
 			partOne,
 		},
 		{
 			71516,
-			`cards_test_two.txt`,
+			`mirage_test_two.txt`,
 			true,
 			partOne,
 		},

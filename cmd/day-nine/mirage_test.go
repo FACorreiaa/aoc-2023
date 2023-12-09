@@ -1,8 +1,9 @@
-package daysix
+package daynine
 
 import (
 	"github.com/stretchr/testify/assert"
 	"os"
+	"strings"
 	"testing"
 )
 
@@ -10,17 +11,22 @@ func TestPartOne(t *testing.T) {
 	tests := []struct {
 		expected int
 		input    string
-		fn       func(string) int
+		fn       func([][]int64) int64
 	}{
 
 		{
-			288,
+			28,
 			`mirage_test_one.txt`,
 			partOne,
 		},
 		{
-			71516,
+			68,
 			`mirage_test_two.txt`,
+			partOne,
+		},
+		{
+			-2,
+			`mirage_test_three.txt`,
 			partTwo,
 		},
 	}
@@ -28,6 +34,8 @@ func TestPartOne(t *testing.T) {
 	for _, test := range tests {
 		b, err := os.ReadFile(test.input)
 		assert.NoError(t, err, test.input)
-		assert.Equal(t, test.expected, test.fn(string(b)))
+		sequences := parseFile([]byte(strings.Join(strings.Split(string(b), "\n"), " ")))
+		assert.Equal(t, test.expected, test.fn(sequences))
+
 	}
 }

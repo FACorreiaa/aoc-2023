@@ -105,7 +105,7 @@ func getDest(source int64, mapping [][]int64) int64 {
 }
 
 func Start() {
-	lines := common.GetLines("./cmd/day-five/cards.txt")
+	lines := common.GetLines("./cmd/day-five/mirage.txt")
 	for _, line := range lines {
 		log.Print(line)
 	}

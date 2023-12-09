@@ -1,10 +1,12 @@
 package main
 
 import (
+	dayeight "github.com/FACorreiaa/aoc-2023/cmd/day-eight"
 	dayfive "github.com/FACorreiaa/aoc-2023/cmd/day-five"
 	dayfour "github.com/FACorreiaa/aoc-2023/cmd/day-four"
 	dayone "github.com/FACorreiaa/aoc-2023/cmd/day-one"
 	dayseven "github.com/FACorreiaa/aoc-2023/cmd/day-seven"
+	daysix "github.com/FACorreiaa/aoc-2023/cmd/day-six"
 	daythree "github.com/FACorreiaa/aoc-2023/cmd/day-three"
 	daytwo "github.com/FACorreiaa/aoc-2023/cmd/day-two"
 	"github.com/charmbracelet/bubbles/key"
@@ -36,6 +38,8 @@ func (r *randomItemGenerator) reset() {
 		"Day 4",
 		"Day 5",
 		"Day 6",
+		"Day 7",
+		"Day 8",
 	}
 
 	r.description = []string{
@@ -45,6 +49,8 @@ func (r *randomItemGenerator) reset() {
 		"Scratchcards",
 		"If You Give A Seed A Fertilizer",
 		"Wait for it",
+		"Camel Cards",
+		"Haunted Wasteland",
 	}
 
 	//r.shuffle.Do(func() {
@@ -77,6 +83,9 @@ func newItemDelegate(keys *delegateKeyMap) list.DefaultDelegate {
 			"Day 3": daythree.Start,
 			"Day 4": dayfour.Start,
 			"Day 5": dayfive.Start,
+			"Day 6": daysix.Start,
+			"Day 7": dayseven.Start,
+			"Day 8": dayeight.Start,
 		}
 		switch msg := msg.(type) {
 		case tea.KeyMsg:
