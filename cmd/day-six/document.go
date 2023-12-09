@@ -4,21 +4,18 @@ import (
 	"fmt"
 	"github.com/FACorreiaa/aoc-2023/cmd/common"
 	"log"
-	"regexp"
 	"strconv"
 	"strings"
 	"time"
 )
 
-var spaceRegExp = regexp.MustCompile(`\s+`)
-
 func partOne(s string) int {
 	var score = 1
 
-	spaceRegExp.ReplaceAllString(s, ` `)
+	common.StringRegexMatch.ReplaceAllString(s, ` `)
 	lines := strings.Split(s, "\n")
-	times := strings.Split(strings.Split(spaceRegExp.ReplaceAllString(lines[0], ` `), ": ")[1], " ")
-	distances := strings.Split(strings.Split(spaceRegExp.ReplaceAllString(lines[1], ` `), ": ")[1], " ")
+	times := strings.Split(strings.Split(common.StringRegexMatch.ReplaceAllString(lines[0], ` `), ": ")[1], " ")
+	distances := strings.Split(strings.Split(common.StringRegexMatch.ReplaceAllString(lines[1], ` `), ": ")[1], " ")
 
 	for i, ts := range times {
 		t, _ := strconv.Atoi(ts)
@@ -40,10 +37,10 @@ func partOne(s string) int {
 func partTwo(s string) int {
 	var score = 1
 
-	spaceRegExp.ReplaceAllString(s, ` `)
+	common.StringRegexMatch.ReplaceAllString(s, ` `)
 	lines := strings.Split(s, "\n")
-	times := strings.Split(strings.Split(spaceRegExp.ReplaceAllString(lines[0], ` `), ": ")[1], " ")
-	distances := strings.Split(strings.Split(spaceRegExp.ReplaceAllString(lines[1], ` `), ": ")[1], " ")
+	times := strings.Split(strings.Split(common.StringRegexMatch.ReplaceAllString(lines[0], ` `), ": ")[1], " ")
+	distances := strings.Split(strings.Split(common.StringRegexMatch.ReplaceAllString(lines[1], ` `), ": ")[1], " ")
 
 	ts := strings.Join(times, "")
 	ds := strings.Join(distances, "")
@@ -60,10 +57,6 @@ func partTwo(s string) int {
 	fmt.Printf("%#v\n", times)
 
 	return score
-}
-
-func calculateScore() int {
-	return 0
 }
 
 func Start() {

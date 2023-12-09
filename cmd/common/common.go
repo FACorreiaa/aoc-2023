@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"log"
 	"os"
+	"regexp"
 	"strings"
 )
 
@@ -42,6 +43,8 @@ func GetLines(filePath string) []string {
 //
 //	return lines
 //}
+
+var StringRegexMatch = regexp.MustCompile(`\s+`)
 
 func Split(input, sep string) (left, right string) {
 	split := strings.Split(input, sep)

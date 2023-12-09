@@ -3,7 +3,6 @@ package dayfour
 import (
 	"github.com/FACorreiaa/aoc-2023/cmd/common"
 	"log"
-	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -90,12 +89,10 @@ func calculateScore(s string) int {
 	return score
 }
 
-var stringRegexMatch = regexp.MustCompile(`\s+`)
-
 func calculateScorePartTwo(s string) (int, int) {
 	scratchCardID := strings.Split(s, ": ")
 
-	id, err := strconv.Atoi(strings.Split(stringRegexMatch.ReplaceAllString(scratchCardID[0], " "), " ")[1])
+	id, err := strconv.Atoi(strings.Split(common.StringRegexMatch.ReplaceAllString(scratchCardID[0], " "), " ")[1])
 	if err != nil {
 		common.HandleError(err, "error converting string")
 	}

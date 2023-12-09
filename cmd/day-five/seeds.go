@@ -46,7 +46,6 @@ func partTwo(s string) int64 {
 		}
 	}
 
-	//fmt.Printf("Part two scorescorescore%#v", score)
 	fmt.Printf("%#v", maps)
 	return score
 }
@@ -70,7 +69,6 @@ func buildMaps(s string) ([]int64, map[string][][]int64) {
 		}
 	}
 
-	//fmt.Printf("%#v", maps)
 	return seeds, maps
 }
 
@@ -107,7 +105,7 @@ func getDest(source int64, mapping [][]int64) int64 {
 }
 
 func Start() {
-	lines := common.GetLines("./cmd/day-five/document.txt")
+	lines := common.GetLines("./cmd/day-five/cards.txt")
 	for _, line := range lines {
 		log.Print(line)
 	}

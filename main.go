@@ -4,7 +4,7 @@ import (
 	dayfive "github.com/FACorreiaa/aoc-2023/cmd/day-five"
 	dayfour "github.com/FACorreiaa/aoc-2023/cmd/day-four"
 	dayone "github.com/FACorreiaa/aoc-2023/cmd/day-one"
-	daysix "github.com/FACorreiaa/aoc-2023/cmd/day-six"
+	dayseven "github.com/FACorreiaa/aoc-2023/cmd/day-seven"
 	daythree "github.com/FACorreiaa/aoc-2023/cmd/day-three"
 	daytwo "github.com/FACorreiaa/aoc-2023/cmd/day-two"
 	"github.com/charmbracelet/bubbles/key"
@@ -358,5 +358,5 @@ func main() {
 	//	log.Print("Error running program:", err)
 	//	os.Exit(1)
 	//}
-	daysix.Start()
+	dayseven.Start()
 }
