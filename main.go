@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/FACorreiaa/aoc-2023/tui"
-	tea "github.com/charmbracelet/bubbletea"
 	"log"
 	"math/rand"
 	"os"
@@ -12,7 +11,7 @@ import (
 func main() {
 	rand.NewSource(time.Now().UTC().UnixNano())
 
-	if _, err := tea.NewProgram(tui.NewModel()).Run(); err != nil {
+	if err := tui.Start(); err != nil {
 		log.Print("Error running program:", err)
 		os.Exit(1)
 	}
