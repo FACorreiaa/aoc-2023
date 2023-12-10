@@ -1,7 +1,6 @@
 package dayfive
 
 import (
-	"fmt"
 	"github.com/FACorreiaa/aoc-2023/cmd/common"
 	"log"
 	"strconv"
@@ -24,8 +23,6 @@ func partOne(s string) int64 {
 			score = temp
 		}
 	}
-
-	fmt.Printf("%#v", maps)
 	return score
 }
 
@@ -45,8 +42,6 @@ func partTwo(s string) int64 {
 			}
 		}
 	}
-
-	fmt.Printf("%#v", maps)
 	return score
 }
 
@@ -57,7 +52,6 @@ func buildMaps(s string) ([]int64, map[string][][]int64) {
 	for _, line := range strings.Split(s, "\n\n") {
 		if strings.Contains(line, "seeds:") {
 			seeds = getInts(strings.ReplaceAll(line, "seeds: ", ""))
-			fmt.Printf("seeds: %#v", seeds)
 			continue
 		}
 

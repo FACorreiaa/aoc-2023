@@ -4,6 +4,7 @@ import (
 	dayeight "github.com/FACorreiaa/aoc-2023/cmd/day-eight"
 	dayfive "github.com/FACorreiaa/aoc-2023/cmd/day-five"
 	dayfour "github.com/FACorreiaa/aoc-2023/cmd/day-four"
+	daynine "github.com/FACorreiaa/aoc-2023/cmd/day-nine"
 	dayone "github.com/FACorreiaa/aoc-2023/cmd/day-one"
 	dayseven "github.com/FACorreiaa/aoc-2023/cmd/day-seven"
 	daysix "github.com/FACorreiaa/aoc-2023/cmd/day-six"
@@ -13,7 +14,11 @@ import (
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"log"
+	"math/rand"
+	"os"
 	"sync"
+	"time"
 )
 
 //items
@@ -40,6 +45,7 @@ func (r *randomItemGenerator) reset() {
 		"Day 6",
 		"Day 7",
 		"Day 8",
+		"Day 9",
 	}
 
 	r.description = []string{
@@ -51,6 +57,7 @@ func (r *randomItemGenerator) reset() {
 		"Wait for it",
 		"Camel Cards",
 		"Haunted Wasteland",
+		"Mirage Maintenance",
 	}
 
 	//r.shuffle.Do(func() {
@@ -86,6 +93,7 @@ func newItemDelegate(keys *delegateKeyMap) list.DefaultDelegate {
 			"Day 6": daysix.Start,
 			"Day 7": dayseven.Start,
 			"Day 8": dayeight.Start,
+			"Day 9": daynine.Start,
 		}
 		switch msg := msg.(type) {
 		case tea.KeyMsg:
@@ -207,6 +215,7 @@ var (
 type item struct {
 	title       string
 	description string
+	subMenu     bool
 }
 
 func (i item) Title() string       { return i.title }
@@ -257,6 +266,7 @@ type model struct {
 	itemGenerator *randomItemGenerator
 	keys          *listKeyMap
 	delegateKeys  *delegateKeyMap
+	subMenu       bool
 }
 
 func newModel() model {
@@ -305,6 +315,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var commands []tea.Cmd
 
 	switch msg := msg.(type) {
+
 	case tea.WindowSizeMsg:
 		h, v := appStyle.GetFrameSize()
 		m.list.SetSize(msg.Width-h, msg.Height-v)
@@ -357,15 +368,20 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
+	if m.subMenu {
+		// Render sub-menu UI
+		return m.list.View()
+	}
+
 	return appStyle.Render(m.list.View())
 }
 
 func main() {
-	//rand.Seed(time.Now().UTC().UnixNano())
-	//
-	//if _, err := tea.NewProgram(newModel()).Run(); err != nil {
-	//	log.Print("Error running program:", err)
-	//	os.Exit(1)
-	//}
-	dayseven.Start()
+	rand.NewSource(time.Now().UTC().UnixNano())
+
+	if _, err := tea.NewProgram(newModel()).Run(); err != nil {
+		log.Print("Error running program:", err)
+		os.Exit(1)
+	}
+	//dayseven.Start()
 }

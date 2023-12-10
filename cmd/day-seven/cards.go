@@ -304,6 +304,9 @@ func playWilds(h hand) int {
 
 func Start() {
 	lines := common.GetLines("./cmd/day-seven/cards.txt")
+	for _, line := range lines {
+		println(line)
+	}
 	partOneWithSlicesStart := time.Now()
 	partOneWithSlicesResult := partOne(strings.Join(lines, "\n"), false)
 	log.Print("Result: ", partOneWithSlicesResult)

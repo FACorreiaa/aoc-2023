@@ -1,7 +1,6 @@
 package daysix
 
 import (
-	"fmt"
 	"github.com/FACorreiaa/aoc-2023/cmd/common"
 	"log"
 	"strconv"
@@ -51,8 +50,6 @@ func partTwo(s string) int {
 		}
 		score = count
 	}
-	fmt.Printf("%#v", distances)
-	fmt.Printf("%#v\n", times)
 
 	return score
 }

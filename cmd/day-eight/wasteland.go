@@ -1,7 +1,6 @@
 package dayeight
 
 import (
-	"fmt"
 	"github.com/FACorreiaa/aoc-2023/cmd/common"
 	"log"
 	"regexp"
@@ -112,8 +111,6 @@ func partThree(s string) int64 {
 		}
 		iterations = append(iterations, iteration)
 	}
-	fmt.Printf("%#v", iterations)
-
 	nums := make([]int, 0)
 
 	for _, iteration := range iterations {
@@ -137,7 +134,7 @@ func gcd(a, b int) int {
 }
 
 func Start() {
-	lines := common.GetLines("./cmd/day-eight/mirage.txt")
+	lines := common.GetLines("./cmd/day-eight/wasteland.txt")
 	for _, line := range lines {
 		println(line)
 	}
