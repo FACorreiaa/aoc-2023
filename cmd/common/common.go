@@ -2,6 +2,7 @@ package common
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"os"
 	"regexp"
@@ -9,6 +10,11 @@ import (
 )
 
 // test os.Readfile
+
+func processLine(line []string) {
+	// Process each line as needed
+	fmt.Println("\n", line)
+}
 
 func GetLines(filePath string) []string {
 	//file, err := os.Open(os.Args[1])
@@ -29,6 +35,7 @@ func GetLines(filePath string) []string {
 	if scanner.Err() != nil {
 		panic(err)
 	}
+	processLine(lines)
 
 	return lines
 }
