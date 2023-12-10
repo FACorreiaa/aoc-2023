@@ -1,4 +1,4 @@
-package lib
+package tui
 
 import (
 	dayeight "github.com/FACorreiaa/aoc-2023/cmd/day-eight"
@@ -10,19 +10,20 @@ import (
 	daysix "github.com/FACorreiaa/aoc-2023/cmd/day-six"
 	daythree "github.com/FACorreiaa/aoc-2023/cmd/day-three"
 	daytwo "github.com/FACorreiaa/aoc-2023/cmd/day-two"
+	"github.com/FACorreiaa/aoc-2023/lib"
 	"github.com/FACorreiaa/aoc-2023/lib/constants"
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
 )
 
-func NewItemDelegate(keys *DelegateKeyMap) list.DefaultDelegate {
+func NewItemDelegate(keys *lib.DelegateKeyMap) list.DefaultDelegate {
 	d := list.NewDefaultDelegate()
 
 	d.UpdateFunc = func(msg tea.Msg, m *list.Model) tea.Cmd {
 		var title string
 
-		if i, ok := m.SelectedItem().(Item); ok {
+		if i, ok := m.SelectedItem().(lib.Item); ok {
 			title = i.Title()
 		} else {
 			return nil
@@ -56,7 +57,8 @@ func NewItemDelegate(keys *DelegateKeyMap) list.DefaultDelegate {
 				//}
 				//return m.NewStatusMessage(constants.StatusMessageStyle("Deleted " + title))
 			case key.Matches(msg, keys.Back):
-
+				//newModel, _ := tea.NewProgram(newModel()).Run()
+				//return newModel
 			}
 		}
 
@@ -74,38 +76,4 @@ func NewItemDelegate(keys *DelegateKeyMap) list.DefaultDelegate {
 	}
 
 	return d
-}
-
-type DelegateKeyMap struct {
-	Choose key.Binding
-	Back   key.Binding
-}
-
-func (d DelegateKeyMap) ShortHelp() []key.Binding {
-	return []key.Binding{
-		d.Choose,
-		d.Back,
-	}
-}
-
-func (d DelegateKeyMap) FullHelp() [][]key.Binding {
-	return [][]key.Binding{
-		{
-			d.Choose,
-			d.Back,
-		},
-	}
-}
-
-func NewDelegateKeyMap() *DelegateKeyMap {
-	return &DelegateKeyMap{
-		Choose: key.NewBinding(
-			key.WithKeys("enter"),
-			key.WithHelp("enter", "Choose"),
-		),
-		Back: key.NewBinding(
-			key.WithKeys("x", "backspace"),
-			key.WithHelp("x", "back"),
-		),
-	}
 }
