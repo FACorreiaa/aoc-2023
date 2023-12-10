@@ -111,7 +111,7 @@ func Start() {
 
 	lines := common.GetLines("./cmd/day-two/cube.txt")
 	for _, line := range lines {
-		log.Print(line)
+		println(line)
 	}
 	games := parseGames(lines)
 	partOneStart := time.Now()

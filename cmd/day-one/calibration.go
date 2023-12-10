@@ -70,7 +70,7 @@ func extractNumber(line string) int {
 func Start() {
 	lines := common.GetLines("./cmd/day-one/calibration.txt")
 	for _, line := range lines {
-		log.Print(line)
+		println(line)
 	}
 	partOneStart := time.Now()
 	partOneResult := partOne(lines)

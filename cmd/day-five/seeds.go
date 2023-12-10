@@ -99,9 +99,9 @@ func getDest(source int64, mapping [][]int64) int64 {
 }
 
 func Start() {
-	lines := common.GetLines("./cmd/day-five/mirage.txt")
+	lines := common.GetLines("./cmd/day-five/seeds.txt")
 	for _, line := range lines {
-		log.Print(line)
+		println(line)
 	}
 	partOneStart := time.Now()
 	partOneResult := partOne(strings.Join(lines, "\n"))

@@ -136,7 +136,7 @@ func calculateScorePartTwo(s string) (int, int) {
 func Start() {
 	lines := common.GetLines("./cmd/day-four/scratchcards.txt")
 	for _, line := range lines {
-		log.Print(line)
+		println(line)
 	}
 	partOneStart := time.Now()
 	partOneResult := partOne(strings.Join(lines, "\n"))

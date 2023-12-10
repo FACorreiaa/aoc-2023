@@ -57,7 +57,7 @@ func partTwo(s string) int {
 func Start() {
 	lines := common.GetLines("./cmd/day-six/document.txt")
 	for _, line := range lines {
-		log.Print(line)
+		println(line)
 	}
 	partOneStart := time.Now()
 	partOneResult := partOne(strings.Join(lines, "\n"))
