@@ -3,12 +3,15 @@ package dayone
 import (
 	"fmt"
 	"github.com/FACorreiaa/aoc-2023/cmd/common"
-	"log"
+	tea "github.com/charmbracelet/bubbletea"
 	"strconv"
 	"strings"
-	"time"
 	"unicode"
 )
+
+type MsgDayOne struct {
+	Result int
+}
 
 var (
 	lookup = []string{"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"}
@@ -67,18 +70,19 @@ func extractNumber(line string) int {
 	return num
 }
 
-func Start() {
+func Start() tea.Msg {
 	lines := common.GetLines("./cmd/day-one/calibration.txt")
-	for _, line := range lines {
-		println(line)
-	}
-	partOneStart := time.Now()
+	//for _, line := range lines {
+	//	println(line)
+	//}
+	//partOneStart := time.Now()
 	partOneResult := partOne(lines)
-	log.Print("Result: ", partOneResult)
-	log.Print("\nDay one part one took: ", time.Since(partOneStart))
-	partTwoStart := time.Now()
-	partTwoResult := partTwo(lines)
-	log.Print("Result: ", partTwoResult)
-	log.Print("\nDay one part two took: ", time.Since(partTwoStart))
+	//log.Print("Result: ", partOneResult)
+	//log.Print("\nDay one part one took: ", time.Since(partOneStart))
+	//partTwoStart := time.Now()
+	//partTwoResult := partTwo(lines)
+	//log.Print("Result: ", partTwoResult)
+	//log.Print("\nDay one part two took: ", time.Since(partTwoStart))
+	return MsgDayOne{Result: partOneResult}
 
 }

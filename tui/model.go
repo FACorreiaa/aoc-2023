@@ -1,8 +1,8 @@
 package tui
 
 import (
-	"github.com/FACorreiaa/aoc-2023/lib"
-	"github.com/FACorreiaa/aoc-2023/lib/constants"
+	dayone "github.com/FACorreiaa/aoc-2023/cmd/day-one"
+	"github.com/FACorreiaa/aoc-2023/common"
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/bubbles/paginator"
@@ -12,7 +12,6 @@ import (
 
 type (
 	errMsg struct{ error }
-	// UpdatedEntries holds the new entries from DB
 )
 
 const (
@@ -35,9 +34,9 @@ type View int
 type model struct {
 	selectedProjectName string
 	list                list.Model
-	itemGenerator       *lib.RandomItemGenerator
+	itemGenerator       *common.RandomItemGenerator
 	keys                *listKeyMap
-	delegateKeys        *lib.DelegateKeyMap
+	delegateKeys        *common.DelegateKeyMap
 	subMenu             bool
 	viewport            viewport.Model
 	paginator           paginator.Model
@@ -76,8 +75,8 @@ func NewListKeyMap() *listKeyMap {
 }
 
 var (
-	itemGenerator lib.RandomItemGenerator
-	delegateKeys  = lib.NewDelegateKeyMap()
+	itemGenerator common.RandomItemGenerator
+	delegateKeys  = common.NewDelegateKeyMap()
 	listKeys      = NewListKeyMap()
 )
 
@@ -90,10 +89,10 @@ func InitProject() (tea.Model, tea.Cmd) {
 	}
 
 	// Setup list
-	delegate := NewItemDelegate(delegateKeys)
+	delegate := common.NewItemDelegate(delegateKeys, DaySolutions())
 	menuList := list.New(items, delegate, 0, 0)
 	menuList.Title = "Advent of Code"
-	menuList.Styles.Title = constants.TitleStyle
+	menuList.Styles.Title = common.TitleStyle
 	menuList.AdditionalFullHelpKeys = func() []key.Binding {
 		return []key.Binding{
 			listKeys.toggleSpinner,
@@ -110,5 +109,11 @@ func InitProject() (tea.Model, tea.Cmd) {
 		itemGenerator: &itemGenerator}
 
 	return m, func() tea.Msg { return errMsg{nil} }
+}
 
+func DaySolutions() map[string]func() tea.Msg {
+	return map[string]func() tea.Msg{
+		"Day 1": dayone.Start,
+		// Add other days as needed...
+	}
 }

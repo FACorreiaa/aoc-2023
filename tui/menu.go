@@ -2,7 +2,7 @@ package tui
 
 import (
 	"fmt"
-	"github.com/FACorreiaa/aoc-2023/lib/constants"
+	"github.com/FACorreiaa/aoc-2023/common"
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
@@ -10,16 +10,6 @@ import (
 	"os"
 	"time"
 )
-
-type menu struct {
-	options       []menuItem
-	selectedIndex int
-}
-
-type menuItem struct {
-	text    string
-	onPress func() tea.Msg
-}
 
 type Model interface {
 	Init() tea.Cmd
@@ -39,7 +29,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 
 	case tea.WindowSizeMsg:
-		h, v := constants.AppStyle.GetFrameSize()
+		h, v := common.AppStyle.GetFrameSize()
 		m.list.SetSize(msg.Width-h, msg.Height-v)
 
 	case tea.KeyMsg:
@@ -51,7 +41,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch {
 		//case key.Matches(msg, constants.Keymap.Enter):
 		//	return m,
-		case key.Matches(msg, constants.Keymap.Quit):
+		case key.Matches(msg, common.Keymap.Quit):
 			m.quitting = true
 			return m, tea.Quit
 
@@ -82,7 +72,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.delegateKeys.Back.SetEnabled(true)
 			newItem := m.itemGenerator.Next()
 			insCmd := m.list.InsertItem(0, newItem)
-			statusCmd := m.list.NewStatusMessage(constants.StatusMessageStyle("Added " + newItem.Title()))
+			statusCmd := m.list.NewStatusMessage(common.StatusMessageStyle("Added " + newItem.Title()))
 			return m, tea.Batch(insCmd, statusCmd)
 		}
 	}
@@ -101,21 +91,23 @@ func (m model) View() string {
 		return m.list.View()
 	}
 
-	return constants.AppStyle.Render(m.list.View())
+	return common.AppStyle.Render(m.list.View())
 }
 
 func Start() error {
 	rand.NewSource(time.Now().UTC().UnixNano())
-	f, err := tea.LogToFile("debug.log", "debug")
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-	defer f.Close()
+	//f, err := tea.LogToFile("debug.log", "debug")
+	//if err != nil {
+	//	fmt.Println(err)
+	//	os.Exit(1)
+	//}
+	//defer f.Close()
+	//m, _ := InitProject()
 	m, _ := InitProject()
-	constants.P = tea.NewProgram(m, tea.WithAltScreen())
 
-	if _, err := constants.P.Run(); err != nil {
+	common.P = tea.NewProgram(m, tea.WithAltScreen())
+
+	if _, err := common.P.Run(); err != nil {
 		fmt.Println("Error running program:", err)
 		os.Exit(1)
 	}

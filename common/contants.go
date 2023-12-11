@@ -1,4 +1,4 @@
-package constants
+package common
 
 import (
 	"github.com/charmbracelet/bubbles/key"
@@ -73,4 +73,43 @@ var Keymap = keymap{
 		key.WithKeys("ctrl+c", "q"),
 		key.WithHelp("ctrl+c/q", "quit"),
 	),
+}
+
+type DelegateKeyMap struct {
+	Choose key.Binding
+	Back   key.Binding
+	Quit   key.Binding
+}
+
+func (d DelegateKeyMap) ShortHelp() []key.Binding {
+	return []key.Binding{
+		d.Choose,
+		d.Back,
+	}
+}
+
+func (d DelegateKeyMap) FullHelp() [][]key.Binding {
+	return [][]key.Binding{
+		{
+			d.Choose,
+			d.Back,
+		},
+	}
+}
+
+func NewDelegateKeyMap() *DelegateKeyMap {
+	return &DelegateKeyMap{
+		Choose: key.NewBinding(
+			key.WithKeys("enter"),
+			key.WithHelp("enter", "Choose"),
+		),
+		Back: key.NewBinding(
+			key.WithKeys("esc"),
+			key.WithHelp("esc", "back"),
+		),
+		Quit: key.NewBinding(
+			key.WithKeys("ctrl+c", "q"),
+			key.WithHelp("ctrl+c/q", "quit"),
+		),
+	}
 }
