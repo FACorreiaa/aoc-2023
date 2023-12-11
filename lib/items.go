@@ -1,11 +1,24 @@
 package lib
 
-import "sync"
+import (
+	dayeight "github.com/FACorreiaa/aoc-2023/cmd/day-eight"
+	dayfive "github.com/FACorreiaa/aoc-2023/cmd/day-five"
+	dayfour "github.com/FACorreiaa/aoc-2023/cmd/day-four"
+	daynine "github.com/FACorreiaa/aoc-2023/cmd/day-nine"
+	dayone "github.com/FACorreiaa/aoc-2023/cmd/day-one"
+	dayseven "github.com/FACorreiaa/aoc-2023/cmd/day-seven"
+	daysix "github.com/FACorreiaa/aoc-2023/cmd/day-six"
+	daythree "github.com/FACorreiaa/aoc-2023/cmd/day-three"
+	daytwo "github.com/FACorreiaa/aoc-2023/cmd/day-two"
+	tea "github.com/charmbracelet/bubbletea"
+	"sync"
+)
 
 type Item struct {
 	title       string
 	description string
 	subMenu     bool
+	onPress     func(title string) tea.Msg
 }
 
 func (i Item) Title() string       { return i.title }
@@ -18,6 +31,7 @@ type RandomItemGenerator struct {
 	titleIndex  int
 	descIndex   int
 	mtx         *sync.Mutex
+	onPress     func(title string) tea.Msg
 	//shuffle     *sync.Once
 }
 
@@ -58,6 +72,20 @@ func (r *RandomItemGenerator) Reset() {
 	//})
 }
 
+func (r *RandomItemGenerator) Choice(title string) func() {
+	mapFunction := map[string]func(){
+		"Day 1": dayone.Start,
+		"Day 2": daytwo.Start,
+		"Day 3": daythree.Start,
+		"Day 4": dayfour.Start,
+		"Day 5": dayfive.Start,
+		"Day 6": daysix.Start,
+		"Day 7": dayseven.Start,
+		"Day 8": dayeight.Start,
+		"Day 9": daynine.Start,
+	}
+	return mapFunction[title]
+}
 func (r *RandomItemGenerator) Next() Item {
 	if r.mtx == nil {
 		r.Reset()
@@ -69,6 +97,7 @@ func (r *RandomItemGenerator) Next() Item {
 	i := Item{
 		title:       r.titles[r.titleIndex],
 		description: r.description[r.descIndex],
+		subMenu:     false,
 	}
 
 	r.titleIndex++

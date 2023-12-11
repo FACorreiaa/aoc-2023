@@ -5,6 +5,20 @@ import (
 	"github.com/FACorreiaa/aoc-2023/lib/constants"
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/list"
+	"github.com/charmbracelet/bubbles/paginator"
+	"github.com/charmbracelet/bubbles/viewport"
+	tea "github.com/charmbracelet/bubbletea"
+)
+
+type (
+	errMsg struct{ error }
+	// UpdatedEntries holds the new entries from DB
+)
+
+const (
+	MenuView View = iota
+	SubmenuView
+	// Add other views as needed
 )
 
 type listKeyMap struct {
@@ -17,12 +31,19 @@ type listKeyMap struct {
 	chooseItem       key.Binding
 }
 
+type View int
 type model struct {
-	list          list.Model
-	itemGenerator *lib.RandomItemGenerator
-	keys          *listKeyMap
-	delegateKeys  *lib.DelegateKeyMap
-	subMenu       bool
+	selectedProjectName string
+	list                list.Model
+	itemGenerator       *lib.RandomItemGenerator
+	keys                *listKeyMap
+	delegateKeys        *lib.DelegateKeyMap
+	subMenu             bool
+	viewport            viewport.Model
+	paginator           paginator.Model
+	quitting            bool
+	error               string
+	activeView          View
 }
 
 func NewListKeyMap() *listKeyMap {
@@ -54,13 +75,13 @@ func NewListKeyMap() *listKeyMap {
 	}
 }
 
-func newModel() model {
-	var (
-		itemGenerator lib.RandomItemGenerator
-		delegateKeys  = lib.NewDelegateKeyMap()
-		listKeys      = NewListKeyMap()
-	)
+var (
+	itemGenerator lib.RandomItemGenerator
+	delegateKeys  = lib.NewDelegateKeyMap()
+	listKeys      = NewListKeyMap()
+)
 
+func InitProject() (tea.Model, tea.Cmd) {
 	// Make initial list of items
 	const numItems = 25
 	items := make([]list.Item, numItems)
@@ -69,7 +90,7 @@ func newModel() model {
 	}
 
 	// Setup list
-	delegate := lib.NewItemDelegate(delegateKeys)
+	delegate := NewItemDelegate(delegateKeys)
 	menuList := list.New(items, delegate, 0, 0)
 	menuList.Title = "Advent of Code"
 	menuList.Styles.Title = constants.TitleStyle
@@ -83,11 +104,11 @@ func newModel() model {
 			listKeys.toggleHelpMenu,
 		}
 	}
-
-	return model{
-		list:          menuList,
+	m := model{list: menuList,
 		keys:          listKeys,
 		delegateKeys:  delegateKeys,
-		itemGenerator: &itemGenerator,
-	}
+		itemGenerator: &itemGenerator}
+
+	return m, func() tea.Msg { return errMsg{nil} }
+
 }

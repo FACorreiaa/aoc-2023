@@ -11,6 +11,24 @@ import (
 	"time"
 )
 
+type menu struct {
+	options       []menuItem
+	selectedIndex int
+}
+
+type menuItem struct {
+	text    string
+	onPress func() tea.Msg
+}
+
+type Model interface {
+	Init() tea.Cmd
+	Update(msg tea.Msg) (Model, tea.Cmd)
+	View() string
+}
+
+//func (m menu) Init() tea.Cmd { return nil }
+
 func (m model) Init() tea.Cmd {
 	return tea.EnterAltScreen
 }
@@ -31,6 +49,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 
 		switch {
+		//case key.Matches(msg, constants.Keymap.Enter):
+		//	return m,
+		case key.Matches(msg, constants.Keymap.Quit):
+			m.quitting = true
+			return m, tea.Quit
+
 		case key.Matches(msg, m.keys.toggleSpinner):
 			cmd := m.list.ToggleSpinner()
 			return m, cmd
@@ -82,8 +106,16 @@ func (m model) View() string {
 
 func Start() error {
 	rand.NewSource(time.Now().UTC().UnixNano())
+	f, err := tea.LogToFile("debug.log", "debug")
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	defer f.Close()
+	m, _ := InitProject()
+	constants.P = tea.NewProgram(m, tea.WithAltScreen())
 
-	if _, err := tea.NewProgram(newModel()).Run(); err != nil {
+	if _, err := constants.P.Run(); err != nil {
 		fmt.Println("Error running program:", err)
 		os.Exit(1)
 	}
