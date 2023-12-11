@@ -71,6 +71,10 @@ func NewListKeyMap() *listKeyMap {
 			key.WithKeys("H"),
 			key.WithHelp("H", "toggle help"),
 		),
+		chooseItem: key.NewBinding(
+			key.WithKeys("enter"),
+			key.WithHelp("enter", "select"),
+		),
 	}
 }
 
@@ -111,9 +115,9 @@ func InitProject() (tea.Model, tea.Cmd) {
 	return m, func() tea.Msg { return errMsg{nil} }
 }
 
+// DaySolutions complete with next days later
 func DaySolutions() map[string]func() tea.Msg {
 	return map[string]func() tea.Msg{
 		"Day 1": dayone.Start,
-		// Add other days as needed...
 	}
 }

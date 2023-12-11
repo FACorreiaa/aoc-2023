@@ -48,14 +48,14 @@ type DayOneModel struct {
 	StartFn func() tea.Msg
 }
 
-func DayOneStart(dayTitle string, startFn func() tea.Msg) SolutionModel {
+func DayOneStart(dayTitle string, startFn func() tea.Msg) (SolutionModel, error) {
 	return &DayOneModel{
 		SolutionModelBase: SolutionModelBase{
 			Title:  dayTitle,
 			Result: dayone.Start(),
 		},
 		StartFn: startFn,
-	}
+	}, nil
 }
 
 func (m *DayOneModel) Init() tea.Cmd {

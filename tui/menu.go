@@ -2,7 +2,10 @@ package tui
 
 import (
 	"fmt"
+	common2 "github.com/FACorreiaa/aoc-2023/cmd/common"
+	dayone "github.com/FACorreiaa/aoc-2023/cmd/day-one"
 	"github.com/FACorreiaa/aoc-2023/common"
+	model_solution "github.com/FACorreiaa/aoc-2023/model"
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
@@ -17,10 +20,24 @@ type Model interface {
 	View() string
 }
 
-//func (m menu) Init() tea.Cmd { return nil }
-
 func (m model) Init() tea.Cmd {
 	return tea.EnterAltScreen
+	//return nil
+}
+
+// testing only for Day 1
+func createSolutionModel(item list.Item) (model_solution.SolutionModel, error) {
+	title := item.FilterValue()
+	mappedValues := map[string]func() tea.Msg{
+		"Day 1": dayone.Start,
+	}
+	result, ok := mappedValues[title]
+	if !ok {
+		return nil, fmt.Errorf("unsupported day title: %s", title)
+	}
+
+	solutionModel, _ := model_solution.DayOneStart(title, result)
+	return solutionModel, nil
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -39,6 +56,23 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 
 		switch {
+		case key.Matches(msg, m.keys.chooseItem):
+			if m.subMenu {
+				selectedItem := m.list.SelectedItem().(list.Item)
+				solutionModel, err := createSolutionModel(selectedItem)
+				if err != nil {
+					common2.HandleError(err, "Error getting the model")
+					return m, nil
+				}
+				fmt.Printf("%#v", solutionModel)
+
+				initCmd := solutionModel.Init()
+				return solutionModel, initCmd
+			} else {
+				// If in the main menu, switch to the sub-menu
+				m.subMenu = true
+			}
+			return m, nil
 		//case key.Matches(msg, constants.Keymap.Enter):
 		//	return m,
 		case key.Matches(msg, common.Keymap.Quit):
@@ -77,7 +111,6 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	}
 
-	// This will also call our delegate's update function.
 	newListModel, cmd := m.list.Update(msg)
 	m.list = newListModel
 	commands = append(commands, cmd)
@@ -87,7 +120,6 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m model) View() string {
 	if m.subMenu {
-		// Render sub-menu UI
 		return m.list.View()
 	}
 
@@ -96,13 +128,7 @@ func (m model) View() string {
 
 func Start() error {
 	rand.NewSource(time.Now().UTC().UnixNano())
-	//f, err := tea.LogToFile("debug.log", "debug")
-	//if err != nil {
-	//	fmt.Println(err)
-	//	os.Exit(1)
-	//}
-	//defer f.Close()
-	//m, _ := InitProject()
+
 	m, _ := InitProject()
 
 	common.P = tea.NewProgram(m, tea.WithAltScreen())
