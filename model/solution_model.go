@@ -21,10 +21,11 @@ type SolutionModelBase struct {
 	Result tea.Msg
 }
 
+// Mock processing, TODO
+
 // StartProcessing implements the StartProcessing method for SolutionModelBase.
 func (m *SolutionModelBase) StartProcessing() tea.Cmd {
 	return func() tea.Msg {
-		// Mock processing, replace with actual logic
 
 		return messages.SolutionMsg(fmt.Sprintf("Day %s\n\nResult: %d\n\nPress 'q' to return to the menu", m.Title))
 	}

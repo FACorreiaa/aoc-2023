@@ -2,7 +2,7 @@ package daytwo
 
 import (
 	"fmt"
-	"github.com/FACorreiaa/aoc-2023/cmd/common"
+	"github.com/FACorreiaa/aoc-2023/cmd/settings"
 	"log"
 	"strings"
 	"time"
@@ -58,10 +58,10 @@ func parseGames(lines []string) []Game {
 }
 
 func parseGame(line string) Game {
-	game, sets := common.Split(line, ":")
+	game, sets := settings.Split(line, ":")
 	var id int
 	if _, err := fmt.Sscanf(game, "Game %d", &id); err != nil {
-		common.HandleError(err, "Error handling game parsing")
+		settings.HandleError(err, "Error handling game parsing")
 		panic(err)
 	}
 	return Game{
@@ -84,7 +84,7 @@ func parseSet(input string) Set {
 		var num int
 		var colour string
 		if _, err := fmt.Sscanf(part, "%d %s", &num, &colour); err != nil {
-			common.HandleError(err, "Error parsing set")
+			settings.HandleError(err, "Error parsing set")
 			panic(err)
 		}
 		set[colour] = num
@@ -109,7 +109,7 @@ func (g Game) Power() int {
 
 func Start() {
 
-	lines := common.GetLines("./cmd/day-two/cube.txt")
+	lines := settings.GetLines("./cmd/day-two/cube.txt")
 	for _, line := range lines {
 		println(line)
 	}

@@ -1,7 +1,7 @@
 package daynine
 
 import (
-	"github.com/FACorreiaa/aoc-2023/cmd/common"
+	"github.com/FACorreiaa/aoc-2023/cmd/settings"
 	"log"
 	"regexp"
 	"slices"
@@ -103,7 +103,7 @@ func partTwo(sequences [][]int64) int64 {
 }
 
 func Start() {
-	lines := common.GetLines("./cmd/day-nine/mirage.txt")
+	lines := settings.GetLines("./cmd/day-nine/mirage.txt")
 	for _, line := range lines {
 		println(line)
 	}

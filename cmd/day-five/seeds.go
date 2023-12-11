@@ -1,7 +1,7 @@
 package dayfive
 
 import (
-	"github.com/FACorreiaa/aoc-2023/cmd/common"
+	"github.com/FACorreiaa/aoc-2023/cmd/settings"
 	"log"
 	"strconv"
 	"strings"
@@ -71,7 +71,7 @@ func getInts(s string) []int64 {
 	for _, v := range strings.Split(s, " ") {
 		i, err := strconv.Atoi(v)
 		if err != nil {
-			common.HandleError(err, "Error converting string")
+			settings.HandleError(err, "Error converting string")
 		}
 		ints = append(ints, int64(i))
 	}
@@ -99,7 +99,7 @@ func getDest(source int64, mapping [][]int64) int64 {
 }
 
 func Start() {
-	lines := common.GetLines("./cmd/day-five/seeds.txt")
+	lines := settings.GetLines("./cmd/day-five/seeds.txt")
 	for _, line := range lines {
 		println(line)
 	}

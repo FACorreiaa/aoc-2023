@@ -1,7 +1,7 @@
 package dayfour
 
 import (
-	"github.com/FACorreiaa/aoc-2023/cmd/common"
+	"github.com/FACorreiaa/aoc-2023/cmd/settings"
 	"log"
 	"strconv"
 	"strings"
@@ -92,9 +92,9 @@ func calculateScore(s string) int {
 func calculateScorePartTwo(s string) (int, int) {
 	scratchCardID := strings.Split(s, ": ")
 
-	id, err := strconv.Atoi(strings.Split(common.StringRegexMatch.ReplaceAllString(scratchCardID[0], " "), " ")[1])
+	id, err := strconv.Atoi(strings.Split(settings.StringRegexMatch.ReplaceAllString(scratchCardID[0], " "), " ")[1])
 	if err != nil {
-		common.HandleError(err, "error converting string")
+		settings.HandleError(err, "error converting string")
 	}
 	scratchCards := scratchCardID[1]
 	wp := strings.Split(scratchCards, " | ")
@@ -134,7 +134,7 @@ func calculateScorePartTwo(s string) (int, int) {
 }
 
 func Start() {
-	lines := common.GetLines("./cmd/day-four/scratchcards.txt")
+	lines := settings.GetLines("./cmd/day-four/scratchcards.txt")
 	for _, line := range lines {
 		println(line)
 	}

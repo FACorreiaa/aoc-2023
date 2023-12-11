@@ -2,7 +2,7 @@ package dayseven
 
 import (
 	"cmp"
-	"github.com/FACorreiaa/aoc-2023/cmd/common"
+	"github.com/FACorreiaa/aoc-2023/cmd/settings"
 	"log"
 	"slices"
 	"strconv"
@@ -138,7 +138,7 @@ func partOne(s string, jokerIsWild bool) int64 {
 		bid, err := strconv.Atoi(split[1])
 
 		if err != nil {
-			common.HandleError(err, "Error converting string")
+			settings.HandleError(err, "Error converting string")
 		}
 
 		h := hand{cards: split[0], bid: bid}
@@ -228,7 +228,7 @@ func playWilds(h hand) int {
 //		bid, err := strconv.Atoi(split[1])
 //
 //		if err != nil {
-//			common.HandleError(err, "Error converting string")
+//			settings.HandleError(err, "Error converting string")
 //		}
 //
 //		h := hand{cards: split[0], bid: bid}
@@ -303,7 +303,7 @@ func playWilds(h hand) int {
 //}
 
 func Start() {
-	lines := common.GetLines("./cmd/day-seven/cards.txt")
+	lines := settings.GetLines("./cmd/day-seven/cards.txt")
 	for _, line := range lines {
 		println(line)
 	}

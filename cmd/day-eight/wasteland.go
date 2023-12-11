@@ -1,7 +1,7 @@
 package dayeight
 
 import (
-	"github.com/FACorreiaa/aoc-2023/cmd/common"
+	"github.com/FACorreiaa/aoc-2023/cmd/settings"
 	"log"
 	"regexp"
 	"strings"
@@ -134,7 +134,7 @@ func gcd(a, b int) int {
 }
 
 func Start() {
-	lines := common.GetLines("./cmd/day-eight/wasteland.txt")
+	lines := settings.GetLines("./cmd/day-eight/wasteland.txt")
 	for _, line := range lines {
 		println(line)
 	}

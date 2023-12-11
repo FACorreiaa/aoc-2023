@@ -2,8 +2,8 @@ package tui
 
 import (
 	"fmt"
-	common2 "github.com/FACorreiaa/aoc-2023/cmd/common"
 	dayone "github.com/FACorreiaa/aoc-2023/cmd/day-one"
+	common2 "github.com/FACorreiaa/aoc-2023/cmd/settings"
 	"github.com/FACorreiaa/aoc-2023/common"
 	model_solution "github.com/FACorreiaa/aoc-2023/model"
 	"github.com/charmbracelet/bubbles/key"

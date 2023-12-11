@@ -1,7 +1,7 @@
 package daytwo
 
 import (
-	"github.com/FACorreiaa/aoc-2023/cmd/common"
+	"github.com/FACorreiaa/aoc-2023/cmd/settings"
 	"testing"
 )
 
@@ -50,7 +50,7 @@ var result int
 func BenchmarkPartOne(b *testing.B) {
 	var r int
 
-	lines := common.GetLines("cube.txt")
+	lines := settings.GetLines("cube.txt")
 
 	for n := 0; n < b.N; n++ {
 		numbers := parseGames(lines)
@@ -63,7 +63,7 @@ func BenchmarkPartOne(b *testing.B) {
 func BenchmarkPartTwo(b *testing.B) {
 	var r int
 
-	lines := common.GetLines("cube.txt")
+	lines := settings.GetLines("cube.txt")
 
 	for n := 0; n < b.N; n++ {
 		numbers := parseGames(lines)

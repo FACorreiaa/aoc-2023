@@ -1,7 +1,7 @@
 package daysix
 
 import (
-	"github.com/FACorreiaa/aoc-2023/cmd/common"
+	"github.com/FACorreiaa/aoc-2023/cmd/settings"
 	"log"
 	"strconv"
 	"strings"
@@ -11,10 +11,10 @@ import (
 func partOne(s string) int {
 	var score = 1
 
-	common.StringRegexMatch.ReplaceAllString(s, ` `)
+	settings.StringRegexMatch.ReplaceAllString(s, ` `)
 	lines := strings.Split(s, "\n")
-	times := strings.Split(strings.Split(common.StringRegexMatch.ReplaceAllString(lines[0], ` `), ": ")[1], " ")
-	distances := strings.Split(strings.Split(common.StringRegexMatch.ReplaceAllString(lines[1], ` `), ": ")[1], " ")
+	times := strings.Split(strings.Split(settings.StringRegexMatch.ReplaceAllString(lines[0], ` `), ": ")[1], " ")
+	distances := strings.Split(strings.Split(settings.StringRegexMatch.ReplaceAllString(lines[1], ` `), ": ")[1], " ")
 
 	for i, ts := range times {
 		t, _ := strconv.Atoi(ts)
@@ -34,10 +34,10 @@ func partOne(s string) int {
 func partTwo(s string) int {
 	var score = 1
 
-	common.StringRegexMatch.ReplaceAllString(s, ` `)
+	settings.StringRegexMatch.ReplaceAllString(s, ` `)
 	lines := strings.Split(s, "\n")
-	times := strings.Split(strings.Split(common.StringRegexMatch.ReplaceAllString(lines[0], ` `), ": ")[1], " ")
-	distances := strings.Split(strings.Split(common.StringRegexMatch.ReplaceAllString(lines[1], ` `), ": ")[1], " ")
+	times := strings.Split(strings.Split(settings.StringRegexMatch.ReplaceAllString(lines[0], ` `), ": ")[1], " ")
+	distances := strings.Split(strings.Split(settings.StringRegexMatch.ReplaceAllString(lines[1], ` `), ": ")[1], " ")
 
 	ts := strings.Join(times, "")
 	ds := strings.Join(distances, "")
@@ -55,7 +55,7 @@ func partTwo(s string) int {
 }
 
 func Start() {
-	lines := common.GetLines("./cmd/day-six/document.txt")
+	lines := settings.GetLines("./cmd/day-six/document.txt")
 	for _, line := range lines {
 		println(line)
 	}

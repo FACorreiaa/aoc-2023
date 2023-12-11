@@ -2,7 +2,7 @@ package dayone
 
 import (
 	"fmt"
-	"github.com/FACorreiaa/aoc-2023/cmd/common"
+	"github.com/FACorreiaa/aoc-2023/cmd/settings"
 	tea "github.com/charmbracelet/bubbletea"
 	"strconv"
 	"strings"
@@ -20,13 +20,13 @@ var (
 
 func partOne(lines []string) int {
 	numbers := extractNumbers(lines)
-	return common.Sum(numbers)
+	return settings.Sum(numbers)
 }
 
 func partTwo(lines []string) int {
 	lines = replaceAlphaNumbers(lines)
 	numbers := extractNumbers(lines)
-	return common.Sum(numbers)
+	return settings.Sum(numbers)
 }
 
 func replaceAlphaNumbers(lines []string) []string {
@@ -65,14 +65,14 @@ func extractNumber(line string) int {
 
 	num, err := strconv.Atoi(string([]rune{digits[0], digits[len(digits)-1]}))
 	if err != nil {
-		common.HandleError(err, "Error getting number")
+		settings.HandleError(err, "Error getting number")
 	}
 
 	return num
 }
 
 func Start() tea.Msg {
-	lines := common.GetLines("./cmd/day-one/calibration.txt")
+	lines := settings.GetLines("./cmd/day-one/calibration.txt")
 	//for _, line := range lines {
 	//	println(line)
 	//}

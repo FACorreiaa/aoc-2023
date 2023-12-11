@@ -1,7 +1,7 @@
 package dayseven
 
 import (
-	"github.com/FACorreiaa/aoc-2023/cmd/common"
+	"github.com/FACorreiaa/aoc-2023/cmd/settings"
 	"strings"
 	"testing"
 )
@@ -42,7 +42,7 @@ var result int64
 func BenchmarkPartOne(b *testing.B) {
 	var r int64
 
-	lines := common.GetLines("cards.txt")
+	lines := settings.GetLines("cards.txt")
 
 	for n := 0; n < b.N; n++ {
 		r = partOne(strings.Join(lines, "\n"), false)
@@ -54,7 +54,7 @@ func BenchmarkPartOne(b *testing.B) {
 func BenchmarkPartTwo(b *testing.B) {
 	var r int64
 
-	lines := common.GetLines("cards.txt")
+	lines := settings.GetLines("cards.txt")
 
 	for n := 0; n < b.N; n++ {
 		r = partOne(strings.Join(lines, "\n"), true)
