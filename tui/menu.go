@@ -9,9 +9,6 @@ import (
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
-	"math/rand"
-	"os"
-	"time"
 )
 
 type Model interface {
@@ -126,17 +123,17 @@ func (m model) View() string {
 	return common.AppStyle.Render(m.list.View())
 }
 
-func Start() error {
-	rand.NewSource(time.Now().UTC().UnixNano())
-
-	m, _ := InitProject()
-
-	common.P = tea.NewProgram(m, tea.WithAltScreen())
-
-	if _, err := common.P.Run(); err != nil {
-		fmt.Println("Error running program:", err)
-		os.Exit(1)
-	}
-
-	return nil
-}
+//func Start() error {
+//	rand.NewSource(time.Now().UTC().UnixNano())
+//
+//	m, _ := InitProject()
+//
+//	common.P = tea.NewProgram(m, tea.WithAltScreen())
+//
+//	if _, err := common.P.Run(); err != nil {
+//		fmt.Println("Error running program:", err)
+//		os.Exit(1)
+//	}
+//
+//	return nil
+//}

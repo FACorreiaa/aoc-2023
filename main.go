@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
+	"github.com/FACorreiaa/aoc-2023/common"
 	"github.com/FACorreiaa/aoc-2023/tui"
-	"log"
+	tea "github.com/charmbracelet/bubbletea"
 	"math/rand"
 	"os"
 	"time"
@@ -11,13 +13,12 @@ import (
 func main() {
 	rand.NewSource(time.Now().UTC().UnixNano())
 
-	if err := tui.Start(); err != nil {
-		log.Print("Error running program:", err)
+	m, _ := tui.InitProject()
+
+	common.P = tea.NewProgram(m, tea.WithAltScreen())
+
+	if _, err := common.P.Run(); err != nil {
+		fmt.Println("Error running program:", err)
 		os.Exit(1)
 	}
-	//dayseven.Start()
-	//if err := tui.StartTea(); err != nil {
-	//	log.Print("Error running program:", err)
-	//	os.Exit(1)
-	//}
 }
