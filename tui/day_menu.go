@@ -1,10 +1,8 @@
 package tui
 
 import (
-	"fmt"
 	dayone "github.com/FACorreiaa/aoc-2023/cmd/day-one"
 	"github.com/FACorreiaa/aoc-2023/common"
-	model_solution "github.com/FACorreiaa/aoc-2023/model"
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
@@ -18,22 +16,6 @@ type Model interface {
 
 func (m model) Init() tea.Cmd {
 	return tea.EnterAltScreen
-	//return nil
-}
-
-// testing only for Day 1
-func createSolutionModel(item list.Item) (model_solution.SolutionModel, error) {
-	title := item.FilterValue()
-	mappedValues := map[string]func() tea.Msg{
-		"Day 1": dayone.Start,
-	}
-	result, ok := mappedValues[title]
-	if !ok {
-		return nil, fmt.Errorf("unsupported day title: %s", title)
-	}
-
-	solutionModel, _ := model_solution.DayOneStart(title, result)
-	return solutionModel, nil
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -121,18 +103,3 @@ func (m model) View() string {
 
 	return common.AppStyle.Render(m.list.View())
 }
-
-//func Start() error {
-//	rand.NewSource(time.Now().UTC().UnixNano())
-//
-//	m, _ := InitProject()
-//
-//	common.P = tea.NewProgram(m, tea.WithAltScreen())
-//
-//	if _, err := common.P.Run(); err != nil {
-//		fmt.Println("Error running program:", err)
-//		os.Exit(1)
-//	}
-//
-//	return nil
-//}

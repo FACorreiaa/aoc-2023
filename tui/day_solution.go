@@ -44,7 +44,7 @@ type Entry struct {
 	activeSolutionTitle string
 	error               string
 	paginator           paginator.Model
-	entries             []model_solution.SolutionModel
+	entries             model_solution.SolutionModelBase
 	quitting            bool
 	Result              tea.Msg        // Result from dayone package
 	startFn             func() tea.Msg // Function to start the computation
@@ -60,7 +60,7 @@ func (e Entry) Init() tea.Cmd {
 
 // InitSolution initialize the entryui model for your program
 func InitSolution(title string, p *tea.Program, startFn func() tea.Msg) *Entry {
-	e := Entry{activeSolutionTitle: title}
+	e := Entry{activeSolutionTitle: title, startFn: startFn}
 	top, right, bottom, left := common.DocStyle.GetMargin()
 	e.viewport = viewport.New(common.WindowSize.Width-left-right, common.WindowSize.Height-top-bottom-1)
 	e.viewport.Style = lipgloss.NewStyle().Align(lipgloss.Bottom)
@@ -70,26 +70,27 @@ func InitSolution(title string, p *tea.Program, startFn func() tea.Msg) *Entry {
 	e.paginator.Type = paginator.Dots
 	e.paginator.ActiveDot = lipgloss.NewStyle().Foreground(lipgloss.AdaptiveColor{Light: "235", Dark: "252"}).Render("•")
 	e.paginator.InactiveDot = lipgloss.NewStyle().Foreground(lipgloss.AdaptiveColor{Light: "250", Dark: "238"}).Render("•")
-	//e.entries = setupEntries()
-	//e.entries = e.setupEntries().(UpdatedSolution)
-	e.paginator.SetTotalPages(len(e.entries))
-	e.Result = startFn()
+
+	// Fetch the result from the dayone package
+	startFn, ok := dayoneFunctions[title]
+	if !ok {
+		// Handle the case where there is no function for the given title
+		return nil
+	}
+	result := startFn()
+
+	// Set the result and title in the Entry struct
+	e.Result = UpdatedSolution{
+		Title:  title,
+		Result: result,
+	}
+	e.entries = model_solution.SolutionModelBase(e.Result.(UpdatedSolution))
+
 	// set content
 	e.setViewportContent()
 	return &e
 }
 
-/*
-	func (m *Entry) setupEntries() tea.Msg {
-		var err error
-		var entries []model_solution.SolutionModelBase
-		if entries, err = constants.Er.GetEntriesByProjectID(e.activeProjectID); err != nil {
-			return errMsg{fmt.Errorf("Cannot find project: %v", err)}
-		}
-		entries = entry.ReverseList(entries)
-		return UpdatedSolution(entries)
-	}
-*/
 func (e *Entry) setViewportContent() {
 	var content string
 	//if len(e.entries) == 0 {
@@ -119,9 +120,9 @@ func (e Entry) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	//		return m, tea.Quit
 	//	}
 	//	cmds = append(cmds, e.createEntryCmd(msg.file))
-	case UpdatedSolution:
-		//e.entries = msg
-		e.paginator.SetTotalPages(len(e.entries))
+	case model_solution.SolutionModelBase:
+		e.entries = msg
+		//e.paginator.SetTotalPages(len(e.entries))
 		e.setViewportContent()
 		e.Result = e.startFn()
 
