@@ -3,7 +3,6 @@ package tui
 import (
 	"fmt"
 	dayone "github.com/FACorreiaa/aoc-2023/cmd/day-one"
-	common2 "github.com/FACorreiaa/aoc-2023/cmd/settings"
 	"github.com/FACorreiaa/aoc-2023/common"
 	model_solution "github.com/FACorreiaa/aoc-2023/model"
 	"github.com/charmbracelet/bubbles/key"
@@ -55,18 +54,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch {
 		case key.Matches(msg, m.keys.chooseItem):
 			if m.subMenu {
-				selectedItem := m.list.SelectedItem().(list.Item)
-				solutionModel, err := createSolutionModel(selectedItem)
-				if err != nil {
-					common2.HandleError(err, "Error getting the model")
-					return m, nil
-				}
-				fmt.Printf("%#v", solutionModel)
-
-				initCmd := solutionModel.Init()
-				return solutionModel, initCmd
+				selectedItem := m.list.SelectedItem()
+				solutionModel := InitSolution(selectedItem.FilterValue(), common.P)
+				return solutionModel.Update(common.WindowSize)
 			} else {
-				// If in the main menu, switch to the sub-menu
 				m.subMenu = true
 			}
 			return m, nil

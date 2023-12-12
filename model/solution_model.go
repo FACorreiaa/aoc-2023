@@ -21,6 +21,16 @@ type SolutionModelBase struct {
 	Result tea.Msg
 }
 
+// FilterValue implements the Item interface for SolutionModelBase.
+func (s *SolutionModelBase) FilterValue() string {
+	return s.Title
+}
+
+// String implements the Item interface for SolutionModelBase.
+func (s *SolutionModelBase) String() string {
+	return s.Title
+}
+
 // Mock processing, TODO
 
 // StartProcessing implements the StartProcessing method for SolutionModelBase.

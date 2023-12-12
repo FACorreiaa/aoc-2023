@@ -10,7 +10,6 @@ import (
 )
 
 type MsgDayOne struct {
-	Title  string
 	Result int
 }
 
@@ -84,6 +83,6 @@ func Start() tea.Msg {
 	//partTwoResult := partTwo(lines)
 	//log.Print("Result: ", partTwoResult)
 	//log.Print("\nDay one part two took: ", time.Since(partTwoStart))
-	return MsgDayOne{Title: "Day 1", Result: partOneResult}
+	return MsgDayOne{Result: partOneResult}
 
 }
