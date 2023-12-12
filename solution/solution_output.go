@@ -7,6 +7,6 @@ import (
 
 const divider = "---"
 
-func FormatEntry(entry model_solution.SolutionModelBase) string {
-	return fmt.Sprintf("ID: %d\nCreated: %s\nMessage:\n\n %s\n %s\n", entry.Title, entry.Result, divider)
+func FormatSolution(solution model_solution.SolutionModelBase) string {
+	return fmt.Sprintf("Title: %s\n Result: %d %s\n", solution.Title, solution.Result, divider)
 }
