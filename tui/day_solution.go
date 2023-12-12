@@ -54,7 +54,7 @@ func InitSolution(title string, p *tea.Program) *Entry {
 	e.paginator.Type = paginator.Dots
 	e.paginator.ActiveDot = lipgloss.NewStyle().Foreground(lipgloss.AdaptiveColor{Light: "235", Dark: "252"}).Render("•")
 	e.paginator.InactiveDot = lipgloss.NewStyle().Foreground(lipgloss.AdaptiveColor{Light: "250", Dark: "238"}).Render("•")
-	//e.entries = e.setupEntries().(UpdatedSolution)
+	//e.entries = setupEntries()
 	//e.entries = e.setupEntries().(UpdatedSolution)
 	e.paginator.SetTotalPages(len(e.entries))
 	// set content
