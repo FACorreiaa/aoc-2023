@@ -1,9 +1,9 @@
 package tui
 
 import (
+	dayone "github.com/FACorreiaa/aoc-2023/cmd/day-one"
 	"github.com/FACorreiaa/aoc-2023/common"
 	model_solution "github.com/FACorreiaa/aoc-2023/model"
-	"github.com/FACorreiaa/aoc-2023/solution"
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/paginator"
 	"github.com/charmbracelet/bubbles/viewport"
@@ -13,10 +13,23 @@ import (
 	"os"
 )
 
+var dayoneFunctions = map[string]func() tea.Msg{
+	"Day 1": dayone.Start,
+	// Add other entries as needed
+}
+
 type (
 	// UpdatedSolution holds the new entries from DB
-	UpdatedSolution []model_solution.SolutionModelBase
+	UpdatedSolution model_solution.SolutionModelBase
 )
+
+//func GetSolution() (model_solution.SolutionModelBase, error) {
+//	var s model_solution.SolutionModelBase
+//	return &s{
+//		"Day 1",
+//		"ddd",
+//	}, nil
+//}
 
 type editorFinishedMsg struct {
 	err  error
@@ -31,8 +44,11 @@ type Entry struct {
 	activeSolutionTitle string
 	error               string
 	paginator           paginator.Model
-	entries             []model_solution.SolutionModelBase
+	entries             []model_solution.SolutionModel
 	quitting            bool
+	Result              tea.Msg        // Result from dayone package
+	startFn             func() tea.Msg // Function to start the computation
+
 }
 
 func (e Entry) FilterValue() string { return e.activeSolutionTitle }
@@ -43,7 +59,7 @@ func (e Entry) Init() tea.Cmd {
 }
 
 // InitSolution initialize the entryui model for your program
-func InitSolution(title string, p *tea.Program) *Entry {
+func InitSolution(title string, p *tea.Program, startFn func() tea.Msg) *Entry {
 	e := Entry{activeSolutionTitle: title}
 	top, right, bottom, left := common.DocStyle.GetMargin()
 	e.viewport = viewport.New(common.WindowSize.Width-left-right, common.WindowSize.Height-top-bottom-1)
@@ -57,6 +73,7 @@ func InitSolution(title string, p *tea.Program) *Entry {
 	//e.entries = setupEntries()
 	//e.entries = e.setupEntries().(UpdatedSolution)
 	e.paginator.SetTotalPages(len(e.entries))
+	e.Result = startFn()
 	// set content
 	e.setViewportContent()
 	return &e
@@ -75,11 +92,11 @@ func InitSolution(title string, p *tea.Program) *Entry {
 */
 func (e *Entry) setViewportContent() {
 	var content string
-	if len(e.entries) == 0 {
-		content = "There are no entries for this project :)"
-	} else {
-		content = solution.FormatEntry(e.entries[e.paginator.Page])
-	}
+	//if len(e.entries) == 0 {
+	//	content = "There are no entries for this project :)"
+	//} else {
+	//	content = solution.FormatEntry(e.entries[e.paginator.Page])
+	//}
 	str, err := glamour.Render(content, "dark")
 	if err != nil {
 		e.error = "could not render content with glamour"
@@ -103,9 +120,11 @@ func (e Entry) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	//	}
 	//	cmds = append(cmds, e.createEntryCmd(msg.file))
 	case UpdatedSolution:
-		e.entries = msg
+		//e.entries = msg
 		e.paginator.SetTotalPages(len(e.entries))
 		e.setViewportContent()
+		e.Result = e.startFn()
+
 	case tea.KeyMsg:
 		switch {
 		//case key.Matches(msg, common.Keymap.Create):

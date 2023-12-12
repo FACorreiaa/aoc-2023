@@ -38,6 +38,7 @@ func createSolutionModel(item list.Item) (model_solution.SolutionModel, error) {
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var commands []tea.Cmd
+	var cmd tea.Cmd
 
 	switch msg := msg.(type) {
 
@@ -54,15 +55,20 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch {
 		case key.Matches(msg, m.keys.chooseItem):
 			if m.subMenu {
+				mappedValues := map[string]func() tea.Msg{
+					"Day 1": dayone.Start,
+					// Add more entries as needed
+				}
+
 				selectedItem := m.list.SelectedItem()
-				solutionModel := InitSolution(selectedItem.FilterValue(), common.P)
+				startFn, _ := mappedValues[selectedItem.FilterValue()]
+
+				solutionModel := InitSolution(selectedItem.FilterValue(), common.P, startFn)
 				return solutionModel.Update(common.WindowSize)
 			} else {
 				m.subMenu = true
 			}
 			return m, nil
-		//case key.Matches(msg, constants.Keymap.Enter):
-		//	return m,
 		case key.Matches(msg, common.Keymap.Quit):
 			m.quitting = true
 			return m, tea.Quit
@@ -96,6 +102,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			insCmd := m.list.InsertItem(0, newItem)
 			statusCmd := m.list.NewStatusMessage(common.StatusMessageStyle("Added " + newItem.Title()))
 			return m, tea.Batch(insCmd, statusCmd)
+		default:
+			m.list, cmd = m.list.Update(msg)
 		}
 	}
 
