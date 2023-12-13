@@ -66,20 +66,6 @@ func (r *RandomItemGenerator) Reset() {
 	//})
 }
 
-//	func (r *RandomItemGenerator) Choice(title string) func() {
-//		mapFunction := map[string]func() tea.Msg{
-//			"Day 1": dayone.Start,
-//			//"Day 2": daytwo.Start,
-//			//"Day 3": daythree.Start,
-//			//"Day 4": dayfour.Start,
-//			//"Day 5": dayfive.Start,
-//			//"Day 6": daysix.Start,
-//			//"Day 7": dayseven.Start,
-//			//"Day 8": dayeight.Start,
-//			//"Day 9": daynine.Start,
-//		}
-//		return mapFunction[title]
-//	}
 func (r *RandomItemGenerator) Next() Item {
 	if r.mtx == nil {
 		r.Reset()
@@ -131,13 +117,17 @@ func NewItemDelegate(keys *DelegateKeyMap, days map[string]func() tea.Msg) list.
 		//	"Day 8": dayeight.Start,
 		//	"Day 9": daynine.Start,
 		//}
+		m.NewStatusMessage(StatusMessageStyle("Check out " + title))
+
 		switch msg := msg.(type) {
 		case tea.KeyMsg:
 			switch {
+
 			case key.Matches(msg, keys.Choose):
 				m.NewStatusMessage(StatusMessageStyle("You chose " + title))
+
 				return func() tea.Msg {
-					return messages.SolutionTransitionMsg{title, days[title]} // Signal the transition to the selected solution
+					return messages.SolutionTransitionMsg{Title: title, StartFn: days[title]} // Signal the transition to the selected solution
 				}
 				//index := m.Index()
 				//m.RemoveItem(index)

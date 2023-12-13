@@ -1,69 +1,59 @@
 package tui
 
 import (
-	dayone "github.com/FACorreiaa/aoc-2023/cmd/day-one"
 	"github.com/FACorreiaa/aoc-2023/common"
-	model_solution "github.com/FACorreiaa/aoc-2023/model"
+	modelSolution "github.com/FACorreiaa/aoc-2023/model"
+	"github.com/FACorreiaa/aoc-2023/solution"
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/paginator"
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/glamour"
 	"github.com/charmbracelet/lipgloss"
-	"os"
 )
-
-var dayoneFunctions = map[string]func() tea.Msg{
-	"Day 1": dayone.Start,
-	// Add other entries as needed
-}
 
 type (
 	// UpdatedSolution holds the new entries from DB
-	UpdatedSolution model_solution.SolutionModelBase
+	UpdatedSolution modelSolution.SolutionModelBase
 )
-
-//func GetSolution() (model_solution.SolutionModelBase, error) {
-//	var s model_solution.SolutionModelBase
-//	return &s{
-//		"Day 1",
-//		"ddd",
-//	}, nil
-//}
-
-type editorFinishedMsg struct {
-	err  error
-	file *os.File
-}
 
 var cmd tea.Cmd
 
 // Entry implements tea.Model
 type Entry struct {
 	viewport            viewport.Model
-	activeSolutionTitle string
+	activeSolutionTitle tea.Msg
 	error               string
+	list                tea.Cmd
 	paginator           paginator.Model
-	entries             model_solution.SolutionModelBase
+	entry               modelSolution.SolutionModelBase
 	quitting            bool
 	Result              tea.Msg        // Result from dayone package
 	startFn             func() tea.Msg // Function to start the computation
-
 }
 
-func (e Entry) FilterValue() string { return e.activeSolutionTitle }
+func (e Entry) FilterValue() tea.Msg { return e.activeSolutionTitle }
 
 // Init run any intial IO on program start
 func (e Entry) Init() tea.Cmd {
 	return nil
 }
 
-// InitSolution initialize the entryui model for your program
-func InitSolution(title string, p *tea.Program, startFn func() tea.Msg) *Entry {
+// InitSolution initialize the solution model  program
+func InitSolution(title tea.Msg, p *tea.Program, startFn func() tea.Msg) *Entry {
 	e := Entry{activeSolutionTitle: title, startFn: startFn}
 	top, right, bottom, left := common.DocStyle.GetMargin()
 	e.viewport = viewport.New(common.WindowSize.Width-left-right, common.WindowSize.Height-top-bottom-1)
 	e.viewport.Style = lipgloss.NewStyle().Align(lipgloss.Bottom)
+
+	result := startFn()
+
+	// Set the result and title in the Entry struct WIP
+	e.Result = UpdatedSolution{
+		Title:  title,
+		Result: result,
+	}
+	e.entry = modelSolution.SolutionModelBase(e.Result.(UpdatedSolution))
 
 	// init paginator
 	e.paginator = paginator.New()
@@ -71,33 +61,15 @@ func InitSolution(title string, p *tea.Program, startFn func() tea.Msg) *Entry {
 	e.paginator.ActiveDot = lipgloss.NewStyle().Foreground(lipgloss.AdaptiveColor{Light: "235", Dark: "252"}).Render("•")
 	e.paginator.InactiveDot = lipgloss.NewStyle().Foreground(lipgloss.AdaptiveColor{Light: "250", Dark: "238"}).Render("•")
 
-	// Fetch the result from the dayone package
-	startFn, ok := dayoneFunctions[title]
-	if !ok {
-		// Handle the case where there is no function for the given title
-		return nil
-	}
-	result := startFn()
-
-	// Set the result and title in the Entry struct
-	e.Result = UpdatedSolution{
-		Title:  title,
-		Result: result,
-	}
-	e.entries = model_solution.SolutionModelBase(e.Result.(UpdatedSolution))
-
 	// set content
 	e.setViewportContent()
 	return &e
 }
 
-func (e *Entry) setViewportContent() {
+func (e Entry) setViewportContent() {
 	var content string
-	//if len(e.entries) == 0 {
-	//	content = "There are no entries for this project :)"
-	//} else {
-	//	content = solution.FormatEntry(e.entries[e.paginator.Page])
-	//}
+	content = solution.FormatSolution(e.entry)
+	//fmt.Printf("%#v", content)
 	str, err := glamour.Render(content, "dark")
 	if err != nil {
 		e.error = "could not render content with glamour"
@@ -120,9 +92,10 @@ func (e Entry) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	//		return m, tea.Quit
 	//	}
 	//	cmds = append(cmds, e.createEntryCmd(msg.file))
-	case model_solution.SolutionModelBase:
-		e.entries = msg
-		//e.paginator.SetTotalPages(len(e.entries))
+	case modelSolution.SolutionModelBase:
+
+		e.entry = msg
+		e.paginator.SetTotalPages(1)
 		e.setViewportContent()
 		e.Result = e.startFn()
 

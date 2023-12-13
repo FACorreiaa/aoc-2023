@@ -3,8 +3,8 @@ package messages
 import tea "github.com/charmbracelet/bubbletea"
 
 type SolutionTransitionMsg struct {
-	DayTitle string
-	StartFn  func() tea.Msg
+	Title   string
+	StartFn func() tea.Msg
 }
 
 // SolutionMsg represents the messages that can be sent to any SolutionModel.

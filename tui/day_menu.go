@@ -42,7 +42,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					// Add more entries as needed
 				}
 
-				selectedItem := m.list.SelectedItem()
+				selectedItem := m.list.SelectedItem().(list.Item)
 				startFn, _ := mappedValues[selectedItem.FilterValue()]
 
 				solutionModel := InitSolution(selectedItem.FilterValue(), common.P, startFn)

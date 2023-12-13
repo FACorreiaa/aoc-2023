@@ -20,6 +20,35 @@ const (
 	// Add other views as needed
 )
 
+type Solution struct {
+	Title       string
+	Description string
+	ReadmePath  string
+}
+
+// r.titles = []string{
+// "Day 1",
+// "Day 2",
+// "Day 3",
+// "Day 4",
+// "Day 5",
+// "Day 6",
+// "Day 7",
+// "Day 8",
+// "Day 9",
+// }
+//
+// r.description = []string{
+// "Trebuchet?!",
+// "Cube Conundrum",
+// "Gear Ratios",
+// "Scratchcards",
+// "If You Give A Seed A Fertilizer",
+// "Wait for it",
+// "Camel Cards",
+// "Haunted Wasteland",
+// "Mirage Maintenance",
+// }
 type listKeyMap struct {
 	toggleSpinner    key.Binding
 	toggleTitleBar   key.Binding
