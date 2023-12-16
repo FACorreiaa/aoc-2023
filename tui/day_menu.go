@@ -1,7 +1,7 @@
 package tui
 
 import (
-	dayone "github.com/FACorreiaa/aoc-2023/cmd/day-one"
+	"github.com/FACorreiaa/aoc-2023/cmd/settings"
 	"github.com/FACorreiaa/aoc-2023/common"
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/list"
@@ -37,15 +37,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch {
 		case key.Matches(msg, m.keys.chooseItem):
 			if m.subMenu {
-				mappedValues := map[string]func() tea.Msg{
-					"Day 1": dayone.Start,
-					// Add more entries as needed
-				}
 
-				selectedItem := m.list.SelectedItem().(list.Item)
-				startFn, _ := mappedValues[selectedItem.FilterValue()]
+				selectedItem := m.list.SelectedItem().(settings.Day)
 
-				solutionModel := InitSolution(selectedItem.FilterValue(), common.P, startFn)
+				solutionModel := InitSolution(selectedItem.FilterValue())
 				return solutionModel.Update(common.WindowSize)
 			} else {
 				m.subMenu = true

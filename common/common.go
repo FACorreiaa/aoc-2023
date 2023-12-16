@@ -1,7 +1,6 @@
 package common
 
 import (
-	"github.com/FACorreiaa/aoc-2023/messages"
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
@@ -93,7 +92,7 @@ func (r *RandomItemGenerator) Next() Item {
 	return i
 }
 
-func NewItemDelegate(keys *DelegateKeyMap, days map[string]func() tea.Msg) list.DefaultDelegate {
+func NewItemDelegate(keys *DelegateKeyMap) list.DefaultDelegate {
 	d := list.NewDefaultDelegate()
 
 	d.UpdateFunc = func(msg tea.Msg, m *list.Model) tea.Cmd {
@@ -126,9 +125,6 @@ func NewItemDelegate(keys *DelegateKeyMap, days map[string]func() tea.Msg) list.
 			case key.Matches(msg, keys.Choose):
 				m.NewStatusMessage(StatusMessageStyle("You chose " + title))
 
-				return func() tea.Msg {
-					return messages.SolutionTransitionMsg{Title: title, StartFn: days[title]} // Signal the transition to the selected solution
-				}
 				//index := m.Index()
 				//m.RemoveItem(index)
 				//if len(m.Items()) == 0 {

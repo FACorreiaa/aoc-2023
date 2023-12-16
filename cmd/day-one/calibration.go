@@ -3,16 +3,10 @@ package dayone
 import (
 	"fmt"
 	"github.com/FACorreiaa/aoc-2023/cmd/settings"
-	tea "github.com/charmbracelet/bubbletea"
 	"strconv"
 	"strings"
 	"unicode"
 )
-
-type MsgDayOne struct {
-	Title  string
-	Result int
-}
 
 var (
 	lookup = []string{"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"}
@@ -71,7 +65,7 @@ func extractNumber(line string) int {
 	return num
 }
 
-func Start() tea.Msg {
+func Start() settings.Day {
 	lines := settings.GetLines("./cmd/day-one/calibration.txt")
 	//for _, line := range lines {
 	//	println(line)
@@ -84,6 +78,6 @@ func Start() tea.Msg {
 	//partTwoResult := partTwo(lines)
 	//log.Print("Result: ", partTwoResult)
 	//log.Print("\nDay one part two took: ", time.Since(partTwoStart))
-	return MsgDayOne{Title: "Day 1", Result: partOneResult}
+	return settings.Day{Title: "Day 1", Result: partOneResult}
 
 }

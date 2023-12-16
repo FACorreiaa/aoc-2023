@@ -1,7 +1,6 @@
 package tui
 
 import (
-	dayone "github.com/FACorreiaa/aoc-2023/cmd/day-one"
 	"github.com/FACorreiaa/aoc-2023/common"
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/list"
@@ -122,7 +121,7 @@ func InitProject() (tea.Model, tea.Cmd) {
 	}
 
 	// Setup list
-	delegate := common.NewItemDelegate(delegateKeys, DaySolutions())
+	delegate := common.NewItemDelegate(delegateKeys)
 	menuList := list.New(items, delegate, 0, 0)
 	menuList.Title = "Advent of Code"
 	menuList.Styles.Title = common.TitleStyle
@@ -142,11 +141,4 @@ func InitProject() (tea.Model, tea.Cmd) {
 		itemGenerator: &itemGenerator}
 
 	return m, func() tea.Msg { return errMsg{nil} }
-}
-
-// DaySolutions complete with next days later
-func DaySolutions() map[string]func() tea.Msg {
-	return map[string]func() tea.Msg{
-		"Day 1": dayone.Start,
-	}
 }

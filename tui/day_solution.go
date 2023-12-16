@@ -1,8 +1,9 @@
 package tui
 
 import (
+	dayone "github.com/FACorreiaa/aoc-2023/cmd/day-one"
+	"github.com/FACorreiaa/aoc-2023/cmd/settings"
 	"github.com/FACorreiaa/aoc-2023/common"
-	modelSolution "github.com/FACorreiaa/aoc-2023/model"
 	"github.com/FACorreiaa/aoc-2023/solution"
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/paginator"
@@ -14,7 +15,7 @@ import (
 
 type (
 	// UpdatedSolution holds the new entries from DB
-	UpdatedSolution modelSolution.SolutionModelBase
+	UpdatedSolution settings.Day
 )
 
 var cmd tea.Cmd
@@ -26,7 +27,7 @@ type Entry struct {
 	error               string
 	list                tea.Cmd
 	paginator           paginator.Model
-	entry               modelSolution.SolutionModelBase
+	entry               settings.Day
 	quitting            bool
 	Result              tea.Msg        // Result from dayone package
 	startFn             func() tea.Msg // Function to start the computation
@@ -39,21 +40,29 @@ func (e Entry) Init() tea.Cmd {
 	return nil
 }
 
+func getResult(title string) int {
+	mappedValues := map[string]func() settings.Day{
+		"Day 1": dayone.Start,
+		// Add more entries as needed
+	}
+	return mappedValues[title]().Result
+}
+
 // InitSolution initialize the solution model  program
-func InitSolution(title tea.Msg, p *tea.Program, startFn func() tea.Msg) *Entry {
-	e := Entry{activeSolutionTitle: title, startFn: startFn}
+func InitSolution(title string) *Entry {
+	e := Entry{activeSolutionTitle: title}
 	top, right, bottom, left := common.DocStyle.GetMargin()
 	e.viewport = viewport.New(common.WindowSize.Width-left-right, common.WindowSize.Height-top-bottom-1)
 	e.viewport.Style = lipgloss.NewStyle().Align(lipgloss.Bottom)
 
-	result := startFn()
+	result := getResult(title)
 
 	// Set the result and title in the Entry struct WIP
 	e.Result = UpdatedSolution{
 		Title:  title,
 		Result: result,
 	}
-	e.entry = modelSolution.SolutionModelBase(e.Result.(UpdatedSolution))
+	e.entry = settings.Day(e.Result.(UpdatedSolution))
 
 	// init paginator
 	e.paginator = paginator.New()
@@ -92,8 +101,7 @@ func (e Entry) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	//		return m, tea.Quit
 	//	}
 	//	cmds = append(cmds, e.createEntryCmd(msg.file))
-	case modelSolution.SolutionModelBase:
-
+	case settings.Day:
 		e.entry = msg
 		e.paginator.SetTotalPages(1)
 		e.setViewportContent()
