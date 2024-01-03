@@ -15,14 +15,6 @@ import (
 //	fmt.Println("\n", line)
 //}
 
-type Day struct {
-	Title       string
-	Description string
-	Result      int
-}
-
-func (i Day) FilterValue() string { return i.Title }
-
 func GetLines(filePath string) []string {
 	//file, err := os.Open(os.Args[1])
 	file, err := os.Open(filePath)

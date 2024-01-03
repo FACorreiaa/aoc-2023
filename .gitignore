@@ -3,7 +3,7 @@ new.db
 bin/
 *.md
 *.pdf
-debug.log
+debulog
 
 dist/
 .env

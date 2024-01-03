@@ -5,10 +5,10 @@ package update
 
 // SolutionUpdate is the update function for a solution model.
 //func SolutionUpdate(model modelSolution.SolutionModel, msg tea.Msg) (tea.Model, tea.Cmd) {
-//	switch msg := msg.(type) {
+//	switch msg := ms(type) {
 //	case messages.SolutionTransitionMsg:
 //		// Transition to the selected solution model
-//		//solutionModel := modelSolution.DayOneStart(msg.DayTitle, msg.StartFn)
+//		//solutionModel := modelSolution.DayOneStart(msDayTitle, msStartFn)
 //		solutionModel, err := modelSolution.DayOneStart("Day 1", dayone.Start)
 //		if err != nil {
 //			settings.HandleError(err, "error getting the model")

@@ -103,7 +103,7 @@ func partTwo(sequences [][]int64) int64 {
 }
 
 func Start() {
-	lines := settings.GetLines("./cmd/day-nine/mirage.txt")
+	lines := settings.GetLines("./cmd/day-nine/pipe.txt")
 	for _, line := range lines {
 		println(line)
 	}

@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-//func TestPartOne(t *testing.T) {
+//func TestPartOne(t *testinT) {
 //	tests := []struct {
 //		expected int
 //		input    string
@@ -15,12 +15,12 @@ import (
 //
 //		{
 //			6,
-//			`mirage_test_one.txt`,
+//			`pipe_test_one.txt`,
 //			partOne,
 //		},
 //		{
 //			2,
-//			`mirage_test_two.txt`,
+//			`pipe_test_two.txt`,
 //			partOne,
 //		},
 //		{
@@ -40,7 +40,7 @@ import (
 
 var result int64
 
-func BenchmarkPartOne(b *testing.B) {
+func BenchmarkPartOne(b *testinB) {
 	var r int64
 
 	lines := settings.GetLines("wasteland.txt")
@@ -52,7 +52,7 @@ func BenchmarkPartOne(b *testing.B) {
 
 }
 
-func BenchmarkPartTwo(b *testing.B) {
+func BenchmarkPartTwo(b *testinB) {
 	var r int64
 
 	lines := settings.GetLines("wasteland.txt")

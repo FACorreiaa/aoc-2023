@@ -1,8 +1,7 @@
-package daynine
+package dayten
 
 import (
 	"github.com/FACorreiaa/aoc-2023/cmd/settings"
-	"strings"
 	"testing"
 )
 
@@ -14,7 +13,7 @@ import (
 //	}{
 //
 //		{
-//			28,
+//			8,
 //			`pipe_test_one.txt`,
 //			partOne,
 //		},
@@ -22,11 +21,6 @@ import (
 //			68,
 //			`pipe_test_two.txt`,
 //			partOne,
-//		},
-//		{
-//			-2,
-//			`mirage_test_three.txt`,
-//			partTwo,
 //		},
 //	}
 //
@@ -47,7 +41,7 @@ func BenchmarkPartOne(b *testing.B) {
 	lines := settings.GetLines("pipe.txt")
 
 	for n := 0; n < b.N; n++ {
-		r = partOne(parseFile([]byte(strings.Join(lines, "\n"))))
+		r = int64(partOne(lines))
 	}
 	result = r
 
@@ -59,7 +53,7 @@ func BenchmarkPartTwo(b *testing.B) {
 	lines := settings.GetLines("pipe.txt")
 
 	for n := 0; n < b.N; n++ {
-		r = partTwo(parseFile([]byte(strings.Join(lines, "\n"))))
+		r = int64(partOne(lines))
 	}
 	result = r
 }

@@ -105,11 +105,11 @@ func Start() {
 	}
 	partOneStart := time.Now()
 	partOneResult := partOne(strings.Join(lines, "\n"))
-	log.Print("Result: ", partOneResult)
-	log.Print("Day five part one took: ", time.Since(partOneStart))
+	loPrint("Result: ", partOneResult)
+	loPrint("Day five part one took: ", time.Since(partOneStart))
 	partTwoStart := time.Now()
 	partTwoResult := partTwo(strings.Join(lines, "\n"))
-	log.Print("Result: ", partTwoResult)
-	log.Print("Day five part two took: ", time.Since(partTwoStart))
+	loPrint("Result: ", partTwoResult)
+	loPrint("Day five part two took: ", time.Since(partTwoStart))
 
 }

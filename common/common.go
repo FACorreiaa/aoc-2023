@@ -7,16 +7,16 @@ import (
 	"sync"
 )
 
-type Item struct {
-	title       string
-	description string
-	subMenu     bool
-	onPress     func(title string) tea.Msg
+type Day struct {
+	DayTitle       string
+	DayDescription string
+	Result         int
+	SubMenu        bool
 }
 
-func (i Item) Title() string       { return i.title }
-func (i Item) Description() string { return i.description }
-func (i Item) FilterValue() string { return i.title }
+func (d Day) Title() string       { return d.DayTitle }
+func (d Day) Description() string { return d.DayDescription }
+func (d Day) FilterValue() string { return d.DayTitle }
 
 type RandomItemGenerator struct {
 	titles      []string
@@ -24,13 +24,10 @@ type RandomItemGenerator struct {
 	titleIndex  int
 	descIndex   int
 	mtx         *sync.Mutex
-	onPress     func(title string) tea.Msg
-	//shuffle     *sync.Once
 }
 
 func (r *RandomItemGenerator) Reset() {
 	r.mtx = &sync.Mutex{}
-	//r.shuffle = &sync.Once{}
 
 	r.titles = []string{
 		"Day 1",
@@ -55,17 +52,9 @@ func (r *RandomItemGenerator) Reset() {
 		"Haunted Wasteland",
 		"Mirage Maintenance",
 	}
-
-	//r.shuffle.Do(func() {
-	//	shuffle := func(x []string) {
-	//		rand.Shuffle(len(x), func(i, j int) { x[i], x[j] = x[j], x[i] })
-	//	}
-	//	shuffle(r.titles)
-	//	shuffle(r.description)
-	//})
 }
 
-func (r *RandomItemGenerator) Next() Item {
+func (r *RandomItemGenerator) Next() Day {
 	if r.mtx == nil {
 		r.Reset()
 	}
@@ -73,10 +62,10 @@ func (r *RandomItemGenerator) Next() Item {
 	r.mtx.Lock()
 	defer r.mtx.Unlock()
 
-	i := Item{
-		title:       r.titles[r.titleIndex],
-		description: r.description[r.descIndex],
-		subMenu:     false,
+	i := Day{
+		DayTitle:       r.titles[r.titleIndex],
+		DayDescription: r.description[r.descIndex],
+		SubMenu:        false,
 	}
 
 	r.titleIndex++
@@ -98,46 +87,29 @@ func NewItemDelegate(keys *DelegateKeyMap) list.DefaultDelegate {
 	d.UpdateFunc = func(msg tea.Msg, m *list.Model) tea.Cmd {
 		var title string
 
-		if i, ok := m.SelectedItem().(Item); ok {
+		if i, ok := m.SelectedItem().(Day); ok {
 			title = i.Title()
 		} else {
 			return nil
 		}
 
-		//
-		//mapFunction := map[string]func() tea.Msg{
-		//	"Day 1": dayone.Start,
-		//	"Day 2": daytwo.Start,
-		//	"Day 3": daythree.Start,
-		//	"Day 4": dayfour.Start,
-		//	"Day 5": dayfive.Start,
-		//	"Day 6": daysix.Start,
-		//	"Day 7": dayseven.Start,
-		//	"Day 8": dayeight.Start,
-		//	"Day 9": daynine.Start,
-		//}
 		m.NewStatusMessage(StatusMessageStyle("Check out " + title))
 
-		switch msg := msg.(type) {
-		case tea.KeyMsg:
-			switch {
+		switch
+		msg := ms(
+		type) {
+	case tea.KeyMsg:
+		switch {
 
-			case key.Matches(msg, keys.Choose):
-				m.NewStatusMessage(StatusMessageStyle("You chose " + title))
+		case key.Matches(msg, keys.Choose):
+		m.NewStatusMessage(StatusMessageStyle("You chose " + title))
 
-				//index := m.Index()
-				//m.RemoveItem(index)
-				//if len(m.Items()) == 0 {
-				//    keys.Back.SetEnabled(false)
-				//}
-				//return m.NewStatusMessage(constants.StatusMessageStyle("Deleted " + title))
-			//case key.Matches(msg, keys.Back):
-			case key.Matches(msg, keys.Quit):
-				//m.quitting = true
-				return tea.Quit
-			}
-
+		case key.Matches(msg, keys.Back):
+		case key.Matches(msg, keys.Quit):
+		//m.quitting = true
+		return tea.Quit
 		}
+	}
 
 		return nil
 	}

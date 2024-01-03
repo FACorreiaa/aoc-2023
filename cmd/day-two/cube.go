@@ -18,7 +18,7 @@ type Game struct {
 func (g Game) CalculateMax() Set {
 	maxValue := make(Set)
 
-	for _, set := range g.Sets {
+	for _, set := range Sets {
 		for colour, num := range set {
 			if num > maxValue[colour] {
 				maxValue[colour] = num
@@ -29,7 +29,7 @@ func (g Game) CalculateMax() Set {
 	return maxValue
 }
 func (g Game) IsPossible(red, green, blue int) bool {
-	maxValue := g.CalculateMax()
+	maxValue := CalculateMax()
 
 	if maxValue["red"] > red || maxValue["green"] > green || maxValue["blue"] > blue {
 		return false
@@ -45,7 +45,7 @@ func partOne(games []Game) int {
 			total += game.ID
 		}
 	}
-	log.Print("Day two part one: ", total)
+	loPrint("Day two part one: ", total)
 	return total
 }
 
@@ -98,12 +98,12 @@ func partTwo(games []Game) int {
 		total += game.Power()
 	}
 
-	log.Print("Day two part one: ", total)
+	loPrint("Day two part one: ", total)
 	return total
 }
 
 func (g Game) Power() int {
-	maxValue := g.CalculateMax()
+	maxValue := CalculateMax()
 	return maxValue["red"] * maxValue["blue"] * maxValue["green"]
 }
 
@@ -116,10 +116,10 @@ func Start() {
 	games := parseGames(lines)
 	partOneStart := time.Now()
 	partOneResult := partOne(games)
-	log.Print("Result: ", partOneResult)
-	log.Print("\nDay two part one took: ", time.Since(partOneStart))
+	loPrint("Result: ", partOneResult)
+	loPrint("\nDay two part one took: ", time.Since(partOneStart))
 	partTwoStart := time.Now()
 	partTwoResult := partTwo(games)
-	log.Print("Result: ", partTwoResult)
-	log.Print("\nDay two part two took: ", time.Since(partTwoStart))
+	loPrint("Result: ", partTwoResult)
+	loPrint("\nDay two part two took: ", time.Since(partTwoStart))
 }

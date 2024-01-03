@@ -1,8 +1,8 @@
 package tui
 
 import (
+	"fmt"
 	dayone "github.com/FACorreiaa/aoc-2023/cmd/day-one"
-	"github.com/FACorreiaa/aoc-2023/cmd/settings"
 	"github.com/FACorreiaa/aoc-2023/common"
 	"github.com/FACorreiaa/aoc-2023/solution"
 	"github.com/charmbracelet/bubbles/key"
@@ -15,7 +15,7 @@ import (
 
 type (
 	// UpdatedSolution holds the new entries from DB
-	UpdatedSolution settings.Day
+	UpdatedSolution common.Day
 )
 
 var cmd tea.Cmd
@@ -27,10 +27,12 @@ type Entry struct {
 	error               string
 	list                tea.Cmd
 	paginator           paginator.Model
-	entry               settings.Day
+	entry               common.Day
 	quitting            bool
-	Result              tea.Msg        // Result from dayone package
-	startFn             func() tea.Msg // Function to start the computation
+	Result              tea.Msg // Result from dayone package
+	Title               string
+	//list                list.Model
+
 }
 
 func (e Entry) FilterValue() tea.Msg { return e.activeSolutionTitle }
@@ -41,7 +43,7 @@ func (e Entry) Init() tea.Cmd {
 }
 
 func getResult(title string) int {
-	mappedValues := map[string]func() settings.Day{
+	mappedValues := map[string]func() common.Day{
 		"Day 1": dayone.Start,
 		// Add more entries as needed
 	}
@@ -50,7 +52,7 @@ func getResult(title string) int {
 
 // InitSolution initialize the solution model  program
 func InitSolution(title string) *Entry {
-	e := Entry{activeSolutionTitle: title}
+	e := Entry{Title: title}
 	top, right, bottom, left := common.DocStyle.GetMargin()
 	e.viewport = viewport.New(common.WindowSize.Width-left-right, common.WindowSize.Height-top-bottom-1)
 	e.viewport.Style = lipgloss.NewStyle().Align(lipgloss.Bottom)
@@ -59,11 +61,10 @@ func InitSolution(title string) *Entry {
 
 	// Set the result and title in the Entry struct WIP
 	e.Result = UpdatedSolution{
-		Title:  title,
-		Result: result,
+		DayTitle: title,
+		Result:   result,
 	}
-	e.entry = settings.Day(e.Result.(UpdatedSolution))
-
+	e.entry = common.Day(e.Result.(UpdatedSolution))
 	// init paginator
 	e.paginator = paginator.New()
 	e.paginator.Type = paginator.Dots
@@ -89,36 +90,43 @@ func (e Entry) setViewportContent() {
 // Update handle IO and commands
 func (e Entry) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmds []tea.Cmd
-	switch msg := msg.(type) {
+
+	switch
+	msg := ms(
+	type) {
+
+case UpdatedSolution:
+	fmt.Printf("%#v", msg)
+
+	e.entry = common.Day(msg)
+	e.paginator.SetTotalPages(1)
+	e.setViewportContent()
 	case tea.WindowSizeMsg:
-		top, right, bottom, left := common.DocStyle.GetMargin()
-		e.viewport = viewport.New(common.WindowSize.Width-left-right, common.WindowSize.Height-top-bottom-6)
+	fmt.Printf("%#v", msg)
+
+	top, right, bottom, left := common.DocStyle.GetMargin()
+	e.viewport = viewport.New(common.WindowSize.Width-left-right, common.WindowSize.Height-top-bottom-6)
 	case errMsg:
-		e.error = msg.Error()
+	e.error = msError()
 	//case editorFinishedMsg:
 	//	e.quitting = false
-	//	if msg.err != nil {
+	//	if mserr != nil {
 	//		return m, tea.Quit
 	//	}
-	//	cmds = append(cmds, e.createEntryCmd(msg.file))
-	case settings.Day:
-		e.entry = msg
-		e.paginator.SetTotalPages(1)
-		e.setViewportContent()
-		e.Result = e.startFn()
+	//	cmds = append(cmds, e.createEntryCmd(msfile))
 
 	case tea.KeyMsg:
-		switch {
-		//case key.Matches(msg, common.Keymap.Create):
-		//	// TODO: remove e.quitting after bug in Bubble Tea (#431) is fixed
-		//	e.quitting = true
-		//	return m, openEditorCmd()
-		case key.Matches(msg, common.Keymap.Back):
-			return InitProject()
-		case key.Matches(msg, common.Keymap.Quit):
-			e.quitting = true
-			return e, tea.Quit
-		}
+	switch {
+	//case key.Matches(msg, common.Keymap.Create):
+	//	// TODO: remove e.quitting after bug in Bubble Tea (#431) is fixed
+	//	e.quitting = true
+	//	return m, openEditorCmd()
+	case key.Matches(msg, common.Keymap.Back):
+	return InitProject()
+	case key.Matches(msg, common.Keymap.Quit):
+	e.quitting = true
+	return e, tea.Quit
+	}
 	}
 
 	e.viewport, cmd = e.viewport.Update(msg)
@@ -126,7 +134,7 @@ func (e Entry) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	cmds = append(cmds, cmd)
 	e.setViewportContent() // refresh the content on every Update call
 	return e, tea.Batch(cmds...)
-}
+	}
 
 func (e Entry) helpView() string {
 	// TODO: use the keymaps to populate the help string

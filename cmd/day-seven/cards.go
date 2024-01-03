@@ -309,10 +309,10 @@ func Start() {
 	}
 	partOneWithSlicesStart := time.Now()
 	partOneWithSlicesResult := partOne(strings.Join(lines, "\n"), false)
-	log.Print("Result: ", partOneWithSlicesResult)
-	log.Print("Day seven part one with slices took with no Joker: ", time.Since(partOneWithSlicesStart))
+	loPrint("Result: ", partOneWithSlicesResult)
+	loPrint("Day seven part one with slices took with no Joker: ", time.Since(partOneWithSlicesStart))
 	partTwoWithSlicesStart := time.Now()
 	partTwoWithSlicesResult := partOne(strings.Join(lines, "\n"), true)
-	log.Print("Result: ", partTwoWithSlicesResult)
-	log.Print("Day seven part one with slices took with Joker: ", time.Since(partTwoWithSlicesStart))
+	loPrint("Result: ", partTwoWithSlicesResult)
+	loPrint("Day seven part one with slices took with Joker: ", time.Since(partTwoWithSlicesStart))
 }
